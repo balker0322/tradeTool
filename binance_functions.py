@@ -1,8 +1,8 @@
 from binance.client import Client
 from binance.enums import *
 
-api_key = "hY3M4CCVyvK5e5tTLEqq1ag8FOp73ChTmSgphvhjYLu2f74YmPFj6NR0A9tJXhw0"
-api_secret = "Hmx9cv3NZkFvzifUJw6ZmwAwTzUuAOe3gU797be3zTdM0Jc9Av7Hj2IFwCgF120Z"
+api_key = ""
+api_secret = ""
 
 client = Client(api_key, api_secret)
 
