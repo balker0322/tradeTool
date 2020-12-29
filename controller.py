@@ -24,7 +24,7 @@ class Controller():
     
         self.view = View(self.risk_min, self.risk_max, self.tick_size)
         threading.Thread(target=self.main_loop).start()
-        self.model = Model()
+        self.model = Model("model/tasks.db")
 
         self.view.run()
     
@@ -56,13 +56,13 @@ class Controller():
         # add new task on database
         if self.new_task:
             self.model.add_new_task(self.new_task)
+            print("New task is added on database")
             self.new_task = None
             self.accept_new_task = True
 
         # get all pending tasks for exection from database
         self.task_list = self.model.get_all_pending_tasks()
         
-
         # execute pending tasks and update database
         for task in self.task_list:
             new_task_details = execute_task(task)
