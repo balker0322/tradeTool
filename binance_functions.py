@@ -1,0 +1,98 @@
+from binance.client import Client
+from binance.enums import *
+
+api_key = "hY3M4CCVyvK5e5tTLEqq1ag8FOp73ChTmSgphvhjYLu2f74YmPFj6NR0A9tJXhw0"
+api_secret = "Hmx9cv3NZkFvzifUJw6ZmwAwTzUuAOe3gU797be3zTdM0Jc9Av7Hj2IFwCgF120Z"
+
+client = Client(api_key, api_secret)
+
+def limit_buy_order(symbol, quantity, Price):
+    pass
+
+def market_buy_order(symbol, quantity):
+    return []
+
+def oco_sell_order(symbol, quantity, Price, stopPrice, stopLimitPrice):
+    pass
+
+'''
+buy_order = client.order_market_buy(
+    symbol='BTCUSDT',
+    quantity=0.001)
+
+oco_order = client.create_oco_order(
+    symbol='BTCUSDT',
+    side='SELL',
+    quantity=0.00100000,
+    price='23600',
+    stopPrice='23450',
+    stopLimitPrice='23400',
+    stopLimitTimeInForce='GTC')
+
+{'orderListId': 11389820,
+ 'contingencyType': 'OCO',
+ 'listStatusType': 'EXEC_STARTED',
+ 'listOrderStatus': 'EXECUTING',
+ 'listClientOrderId': '8CwRTW9k8GGT0h5fxsSoxg',
+ 'transactionTime': 1608444879688,
+ 'symbol': 'BTCUSDT',
+ 'orders': [{'symbol': 'BTCUSDT',
+   'orderId': 3961371312,
+   'clientOrderId': 'Xa6oe6hgEFVJgHe7vA1pB6'},
+  {'symbol': 'BTCUSDT',
+   'orderId': 3961371313,
+   'clientOrderId': 'jbJadDew4cZgnxlXnCMKya'}],
+ 'orderReports': [{'symbol': 'BTCUSDT',
+   'orderId': 3961371312,
+   'orderListId': 11389820,
+   'clientOrderId': 'Xa6oe6hgEFVJgHe7vA1pB6',
+   'transactTime': 1608444879688,
+   'price': '23400.00000000',
+   'origQty': '0.00100000',
+   'executedQty': '0.00000000',
+   'cummulativeQuoteQty': '0.00000000',
+   'status': 'NEW',
+   'timeInForce': 'GTC',
+   'type': 'STOP_LOSS_LIMIT',
+   'side': 'SELL',
+   'stopPrice': '23450.00000000'},
+  {'symbol': 'BTCUSDT',
+   'orderId': 3961371313,
+   'orderListId': 11389820,
+   'clientOrderId': 'jbJadDew4cZgnxlXnCMKya',
+   'transactTime': 1608444879688,
+   'price': '23600.00000000',
+   'origQty': '0.00100000',
+   'executedQty': '0.00000000',
+   'cummulativeQuoteQty': '0.00000000',
+   'status': 'NEW',
+   'timeInForce': 'GTC',
+   'type': 'LIMIT_MAKER',
+   'side': 'SELL'}]}
+
+
+
+order_stat = client.get_order(
+    symbol='BTCUSDT',
+    orderId=3961251473)
+
+order_stat
+{'symbol': 'BTCUSDT',
+ 'orderId': 3961371312,
+ 'orderListId': 11389820,
+ 'clientOrderId': 'Xa6oe6hgEFVJgHe7vA1pB6',
+ 'price': '23400.00000000',
+ 'origQty': '0.00100000',
+ 'executedQty': '0.00000000',
+ 'cummulativeQuoteQty': '0.00000000',
+ 'status': 'NEW',
+ 'timeInForce': 'GTC',
+ 'type': 'STOP_LOSS_LIMIT',
+ 'side': 'SELL',
+ 'stopPrice': '23450.00000000',
+ 'icebergQty': '0.00000000',
+ 'time': 1608444879688,
+ 'updateTime': 1608444879688,
+ 'isWorking': False,
+ 'origQuoteOrderQty': '0.00000000'}
+'''
