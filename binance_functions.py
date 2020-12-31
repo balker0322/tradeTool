@@ -7,6 +7,7 @@ api_secret = ""
 client = Client(api_key, api_secret)
 
 def limit_buy_order(symbol, quantity, Price):
+    print("limit_buy_order({symbol}, {quantity}, {Price})".format(symbol, quantity, Price))
     pass
 
 def market_buy_order(symbol, quantity):

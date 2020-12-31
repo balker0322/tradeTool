@@ -23,8 +23,8 @@ class Controller():
         self.accept_new_task = True
     
         self.view = View(self.risk_min, self.risk_max, self.tick_size)
-        threading.Thread(target=self.main_loop).start()
         self.model = Model("model/tasks.db")
+        threading.Thread(target=self.main_loop).start()
 
         self.view.run()
     
@@ -59,9 +59,11 @@ class Controller():
             print("New task is added on database")
             self.new_task = None
             self.accept_new_task = True
+            x = self.model.get_all_pending_tasks()
+            print(x[-1].task_info)
 
         # get all pending tasks for exection from database
-        self.task_list = self.model.get_all_pending_tasks()
+        # self.task_list = self.model.get_all_pending_tasks()
         
         # execute pending tasks and update database
         for task in self.task_list:
@@ -98,5 +100,7 @@ class Controller():
     def event_monitor(self):
         if self.view.execute_button_pressed:
             self.accept_new_task = False
-            self.new_task = self.view.trade_options
+            self.new_task = Task()
+            for info in self.view.trade_options:
+                self.new_task.task_info[info] = self.view.trade_options[info]
             self.view.execute_button_pressed = False
