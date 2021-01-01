@@ -1,6 +1,7 @@
 
 from .task import Task, info_list
 import sqlite3
+# import copy
 
 class Model(): 
     def __init__(self, db):
@@ -16,6 +17,7 @@ class Model():
             con.commit()
 
     def add_new_task(self, new_task : Task):
+        # new_task = new_task.copy()
         new_task_info = [new_task.task_info[info] for info in self.info_list[1:]]
         question_marks = ", ".join(["?" for _ in range(len(self.info_list[1:]))])
         with sqlite3.connect(self.db) as con:
@@ -42,9 +44,17 @@ class Model():
 
         return task_list
 
-    def update_task(self, new_task_details):
-        pass
-
+    def update_task(self, new_task_details : Task):
+        new_task_id = new_task_details.get_id()
+        new_task_info = [new_task_details.task_info[info] for info in self.info_list[1:]]
+        new_task_info.append(new_task_id)
+        columns = [info + " = ?" for info in self.info_list[1:]]
+        columns = ", ".join(columns)
+        with sqlite3.connect(self.db) as con:
+            cur = con.cursor()
+            cur.execute("UPDATE tasks SET " + columns + " WHERE id = ?",
+                         tuple(new_task_info))
+            con.commit()
 
 # for reference
 '''

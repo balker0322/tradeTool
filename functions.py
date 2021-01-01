@@ -32,32 +32,33 @@ def dec_to_percent_disp(dec_num):
 
 def execute_task(task : Task):
     task = deepcopy(task)
-    status = task.status
+    next_step = task.get_next_step()
+    task_id = task.get_id()
 
-    if status == 'BUY':
-        # symbol = task.symbol
-        # quantity = task.quantity
-        # response = market_buy_order(symbol, quantity)
-        # if response:
-        #     if response['buy_status'] == 'FILLED':
-        #         task.status = 'GET_BUY_ORDER_STATUS'
-        #         task.actual_buy_price = response['actual_buy_price']
-        #         task.actual_buy_quantity = response['actual_buy_quantity']
-        pass
+    if next_step == 'BUY':
+        print('ID{}: creating buy order..'.format(task_id))
+        next_step = 'GET_BUY_ORDER_STATUS'
 
-    if status == 'GET_BUY_ORDER_STATUS':
-        pass
+    if next_step == 'GET_BUY_ORDER_STATUS':
+        print('ID{}: waitng buy order to finish..'.format(task_id))
+        next_step = 'SELL'
 
-    if status == 'SELL':
-        pass
+    if next_step == 'SELL':
+        print('ID{}: creating sell order..'.format(task_id))
+        next_step = 'GET_BUY_SELL_STATUS'
 
-    if status == 'GET_BUY_SELL_STATUS':
-        pass
+    if next_step == 'GET_BUY_SELL_STATUS':
+        print('ID{}: waitng buy order to finish..'.format(task_id))
+        next_step = 'DONE'
 
-    if status == 'DONE':
-        pass
+    if next_step == 'DONE':
+        # print('ID:{} task done'.format(task_id))
+        task.set_task_to_inactive()
 
-    if status == 'CANCELLED':
-        pass  
+    if next_step == 'CANCEL':
+        print('ID:{} cancel'.format(task_id))
+        task.set_task_to_inactive()
+
+    task.set_next_step(next_step)
 
     return task

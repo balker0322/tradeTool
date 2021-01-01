@@ -12,7 +12,7 @@ info_list = [
     "risk_percent_val",
     "status",
     "next_step",
-    "timesamp",
+    "timestamp",
 ]
 
 class Task():
@@ -53,9 +53,18 @@ class Task():
     def set_next_step(self, next_step):
         self.task_info["next_step"] = next_step
 
-    def set_timesamp(self, timesamp):
-        self.task_info["timesamp"] = timesamp
+    def set_timestamp(self, timestamp):
+        self.task_info["timestamp"] = timestamp
+    
+    def set_task_to_active(self):
+        self.set_status('ACTIVE')
+    
+    def set_task_to_inactive(self):
+        self.set_status('INACTIVE')
 
+
+    def get_id(self):
+        return self.task_info["id"]
 
     def get_symbol(self):
         return self.task_info["symbol"]
@@ -87,6 +96,6 @@ class Task():
     def get_next_step(self):
         return self.task_info["next_step"]
 
-    def get_timesamp(self):
-        return self.task_info["timesamp"]
+    def get_timestamp(self):
+        return self.task_info["timestamp"]
 

@@ -60,10 +60,10 @@ class Controller():
             self.new_task = None
             self.accept_new_task = True
             x = self.model.get_all_pending_tasks()
-            print(x[-1].task_info)
+            # print(x[-1].task_info)
 
         # get all pending tasks for exection from database
-        # self.task_list = self.model.get_all_pending_tasks()
+        self.task_list = self.model.get_all_pending_tasks()
         
         # execute pending tasks and update database
         for task in self.task_list:
@@ -103,4 +103,6 @@ class Controller():
             self.new_task = Task()
             for info in self.view.trade_options:
                 self.new_task.task_info[info] = self.view.trade_options[info]
+            self.new_task.set_task_to_active()
+            self.new_task.set_next_step('BUY')
             self.view.execute_button_pressed = False
