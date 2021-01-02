@@ -19,6 +19,10 @@ class Controller():
         self.lot_size = LOT_SIZE
         self.pair_list = ['BTCUSDT', 'ETHUSDT', 'XRPUSDT', 'EOSUSDT']
 
+        self.base_coin = 'USDT'
+        self.base_coin_balance = ''
+        self.equity = ''
+
         self.task_list = []
         self.new_task = None
         self.accept_new_task = True

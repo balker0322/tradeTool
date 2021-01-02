@@ -5,8 +5,11 @@ info_list = [
     "pair",
     "quantity",
     "take_profit_val",
+    "take_profit_sell_order_id"
     "stop_loss_val",
+    "stop_loss_sell_order_id",
     "entry_price_val",
+    "entry_buy_order_id",
     "position_size_val",
     "take_profit_min",
     "risk_percent_val",

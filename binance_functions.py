@@ -1,8 +1,6 @@
 from binance.client import Client
 from binance.enums import *
-
-api_key = ""
-api_secret = ""
+from config import api_key, api_secret
 
 client = Client(api_key, api_secret)
 

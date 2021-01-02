@@ -1,3 +1,11 @@
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+api_key = os.environ.get("BINANCE_API_KEY")
+api_secret = os.environ.get("BINANCE_API_SECRET")
+
 POSITION_SIZE_MIN = "0.10" # in percentage of equity
 POSITION_SIZE_MAX = "1.00"
 RR_RATIO_MIN = "0.30"
