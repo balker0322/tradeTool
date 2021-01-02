@@ -81,6 +81,7 @@ class View():
             pass
         self.stop_loss_val = str(self.stop_loss_input.var.get())
         self.take_profit_val = str(self.take_profit_input.var.get())
+        self.pair = str(self.pair_input.var.get())
 
     def add_task(self):
         pass
@@ -95,6 +96,7 @@ class View():
         trade_options['position_size_val'] = self.position_size_val
         trade_options['take_profit_min'] = self.take_profit_min
         trade_options['rr_ratio_val'] = self.rr_ratio_val
+        trade_options['pair'] = self.pair
         self.trade_options = trade_options
 
         # disable execute button

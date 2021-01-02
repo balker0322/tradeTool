@@ -2,7 +2,7 @@
 
 info_list = [
     "id",
-    "symbol",
+    "pair",
     "quantity",
     "take_profit_val",
     "stop_loss_val",
