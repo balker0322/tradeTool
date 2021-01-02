@@ -22,9 +22,34 @@ class slider_input():
         self.scale = Scale( frame1, variable = self.var, orient = HORIZONTAL)
         scale = self.scale
         scale.pack(fill=X, anchor = CENTER)
-    
-    def update(self):
-        pass
+
+        
+class drop_down():
+
+    def __init__(self, master, options : list, label = "No label", label_width = 15):
+        self.master = master
+        self.label = label
+        self.label_width = label_width
+        self.var = StringVar()
+        self.options = options
+        self.initUI()
+
+    def initUI(self):
+        self.frame = Frame(self.master)
+        frame = self.frame
+        frame.pack(fill=X)
+
+        self.lbl = Label(frame, text=self.label, width=self.label_width)
+        lbl = self.lbl
+        lbl.pack(side=LEFT, padx=5, pady=5)
+
+        OPTIONS = self.options
+
+        self.var.set(OPTIONS[0]) # default value
+
+        self.entry = OptionMenu(frame, self.var, *OPTIONS)
+        entry = self.entry
+        entry.pack(fill=X, padx=5, expand=True)
 
         
 class entry():

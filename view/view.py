@@ -2,10 +2,11 @@ from .widgets import *
 
 
 class View():
-    def __init__(self, risk_percent_min, risk_percent_max, tick_size):
+    def __init__(self, risk_percent_min, risk_percent_max, tick_size, pair_list):
         self.risk_percent_min = risk_percent_min
         self.risk_percent_max = risk_percent_max
         self.tick_size = tick_size
+        self.pair_list = pair_list
 
         self.execute_button_pressed = False
 
@@ -27,8 +28,9 @@ class View():
         # frame for user input
         self.option_frame = LabelFrame(self.main_frame, text="Options")
         self.option_frame.pack(fill=X)
+        self.pair_input = drop_down(master=self.option_frame, options=self.pair_list, label = "Pair:")
         self.risk_input = slider_input(master=self.option_frame, label = "Risk Percentage:")
-        self.risk_input.scale.config(from_=float(self.risk_percent_min), to=float(self.risk_percent_max), resolution=.0001, showvalue=0)
+        self.risk_input.scale.config(from_=float(self.risk_percent_min), to=float(self.risk_percent_max), resolution=.0001)
         self.entry_price_input = entry(master=self.option_frame, label = "Entry Price:")
         self.entry_price_input.var.set("19000")
         self.stop_loss_input = slider_input(master=self.option_frame, label = "Stop Loss:")
