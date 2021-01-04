@@ -28,7 +28,7 @@ def hello():
 
 
 if __name__ == "__main__":
-    print ("name is main   ")
+    print ("name is main  ")
 
 
 '''
