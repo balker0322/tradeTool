@@ -9,10 +9,27 @@ def limit_buy_order(symbol, quantity, Price):
     pass
 
 def market_buy_order(symbol, quantity):
-    return []
+    try:
+        buy_order = client.order_market_buy(
+        symbol=symbol,
+        quantity=quantity)
+        return buy_order
+    except:
+        return False
 
 def oco_sell_order(symbol, quantity, Price, stopPrice, stopLimitPrice):
     pass
+
+def get_balance(asset):
+    return client.get_asset_balance(asset=asset)['free']
+
+def hello():
+    print("hello")
+
+
+if __name__ == "__main__":
+    print ("name is main")
+
 
 '''
 buy_order = client.order_market_buy(

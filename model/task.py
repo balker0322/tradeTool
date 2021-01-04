@@ -11,7 +11,6 @@ info_list = [
     "entry_price_val",
     "entry_buy_order_id",
     "position_size_val",
-    "take_profit_min",
     "risk_percent_val",
     "status",
     "next_step",
@@ -43,9 +42,6 @@ class Task():
 
     def set_position_size_val(self, position_size_val):
         self.task_info["position_size_val"] = position_size_val
-
-    def set_take_profit_min(self, take_profit_min):
-        self.task_info["take_profit_min"] = take_profit_min
 
     def set_risk_percent_val(self, risk_percent_val):
         self.task_info["risk_percent_val"] = risk_percent_val
@@ -86,9 +82,6 @@ class Task():
 
     def get_position_size_val(self):
         return self.task_info["position_size_val"]
-
-    def get_take_profit_min(self):
-        return self.task_info["take_profit_min"]
 
     def get_risk_percent_val(self):
         return self.task_info["risk_percent_val"]

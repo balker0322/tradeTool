@@ -2,6 +2,7 @@ from decimal import Decimal as d
 from model import Task
 from copy import deepcopy
 from binance_functions import *
+import time
 
 def get_position_size(stop_loss, entry_price, risk_percentage, k = d("1.002")):
     position_size = d(risk_percentage) / (d("1.00") - (d(stop_loss) / (d(entry_price)*d(k))))
@@ -33,29 +34,34 @@ def dec_to_percent_disp(dec_num):
 def execute_task(task : Task):
     task = deepcopy(task)
     next_step = task.get_next_step()
+    current_step = next_step
     task_id = task.get_id()
 
-    if next_step == 'BUY':
+    if current_step == 'BUY':
         print('ID{}: creating buy order..'.format(task_id))
+        time.sleep(1)
         next_step = 'GET_BUY_ORDER_STATUS'
 
-    if next_step == 'GET_BUY_ORDER_STATUS':
+    if current_step == 'GET_BUY_ORDER_STATUS':
         print('ID{}: waitng buy order to finish..'.format(task_id))
+        time.sleep(1)
         next_step = 'SELL'
 
-    if next_step == 'SELL':
+    if current_step == 'SELL':
         print('ID{}: creating sell order..'.format(task_id))
+        time.sleep(1)
         next_step = 'GET_BUY_SELL_STATUS'
 
-    if next_step == 'GET_BUY_SELL_STATUS':
+    if current_step == 'GET_BUY_SELL_STATUS':
         print('ID{}: waitng buy order to finish..'.format(task_id))
+        time.sleep(1)
         next_step = 'DONE'
 
-    if next_step == 'DONE':
+    if current_step == 'DONE':
         # print('ID:{} task done'.format(task_id))
         task.set_task_to_inactive()
 
-    if next_step == 'CANCEL':
+    if current_step == 'CANCEL':
         print('ID:{} cancel'.format(task_id))
         task.set_task_to_inactive()
 

@@ -94,7 +94,6 @@ class View():
         trade_options['stop_loss_val'] = self.stop_loss_val
         trade_options['entry_price_val'] = self.entry_price_val
         trade_options['position_size_val'] = self.position_size_val
-        trade_options['take_profit_min'] = self.take_profit_min
         trade_options['rr_ratio_val'] = self.rr_ratio_val
         trade_options['pair'] = self.pair
         self.trade_options = trade_options
