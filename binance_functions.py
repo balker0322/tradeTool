@@ -1,5 +1,6 @@
 from binance.client import Client
 from binance.enums import *
+from decimal import Decimal as d
 from config import api_key, api_secret
 
 client = Client(api_key, api_secret)
@@ -20,11 +21,48 @@ def market_buy_order(symbol, quantity):
 def oco_sell_order(symbol, quantity, Price, stopPrice, stopLimitPrice):
     pass
 
-def get_balance(asset):
-    return client.get_asset_balance(asset=asset)['free']
 
-def hello():
-    print("hello")
+def get_balance(asset=False):
+    if asset:
+        return client.get_asset_balance(asset=asset)['free']
+    return client.get_account()
+
+
+
+def get_equivalent(amount, original_sym, equavalent_sym):
+    '''
+    this function converts amount in certain symbol to equivalent
+    amount on another symbol
+
+    example:
+    convert 1 BTC to USDT
+    get_equivalent('1', 'BTC', 'USDT')
+    '''
+
+    ticker = get_ticker(original_sym+equavalent_sym)
+    if ticker:
+        return str(d(amount)*d(ticker))
+
+    ticker = get_ticker(equavalent_sym+original_sym)
+    if ticker:
+        return str(d(amount)/d(ticker))
+
+    return False
+
+
+def get_ticker(symbol):
+    try:
+        ticker = client.get_symbol_ticker(symbol=symbol)['price']
+    except:
+        ticker = False
+    return ticker
+
+
+
+def hello(name = None):
+    if name:
+        return name
+    return "hi"
 
 
 if __name__ == "__main__":
