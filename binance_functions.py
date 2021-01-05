@@ -24,12 +24,13 @@ def oco_sell_order(symbol, quantity, Price, stopPrice, stopLimitPrice):
 
 def get_balance(asset=False):
     if asset:
-        return client.get_asset_balance(asset=asset)['free']
-    return client.get_account()
+        return client.get_asset_balance(asset=asset)
+    return client.get_account()['balances']
 
 
 
 def get_equivalent(amount, original_sym, equavalent_sym):
+
     '''
     this function converts amount in certain symbol to equivalent
     amount on another symbol
@@ -38,6 +39,9 @@ def get_equivalent(amount, original_sym, equavalent_sym):
     convert 1 BTC to USDT
     get_equivalent('1', 'BTC', 'USDT')
     '''
+
+    if original_sym == original_sym:
+        return amount
 
     ticker = get_ticker(original_sym+equavalent_sym)
     if ticker:
@@ -50,6 +54,7 @@ def get_equivalent(amount, original_sym, equavalent_sym):
     return False
 
 
+
 def get_ticker(symbol):
     try:
         ticker = client.get_symbol_ticker(symbol=symbol)['price']
@@ -57,6 +62,11 @@ def get_ticker(symbol):
         ticker = False
     return ticker
 
+
+def get_equity(base_symbol='USDT'):
+    all_balances = get_balance()
+    total_equity = d('0.0')
+    pass
 
 
 def hello(name = None):
