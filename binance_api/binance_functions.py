@@ -4,11 +4,14 @@ from decimal import Decimal as d
 from config import api_key, api_secret
 import pickle
 
+
 client = Client(api_key, api_secret)
+
 
 def limit_buy_order(symbol, quantity, Price):
     print("limit_buy_order({symbol}, {quantity}, {Price})".format(symbol, quantity, Price))
     pass
+
 
 def market_buy_order(symbol, quantity):
     try:
@@ -19,6 +22,7 @@ def market_buy_order(symbol, quantity):
     except:
         return False
 
+
 def oco_sell_order(symbol, quantity, Price, stopPrice, stopLimitPrice):
     pass
 
@@ -27,6 +31,7 @@ def get_balance(asset=False):
     if asset:
         return client.get_asset_balance(asset=asset)
     return client.get_account()['balances']
+
 
 def get_non_zero_balance():
     non_zero_balance = []
@@ -62,12 +67,14 @@ def get_equivalent(amount, original_sym, equavalent_sym):
 
     return False
 
+
 def get_ticker(symbol):
     try:
         ticker = client.get_symbol_ticker(symbol=symbol)['price']
     except:
         ticker = False
     return ticker
+
 
 def get_equity(base_symbol='USDT'):
     all_balances = get_non_zero_balance()
@@ -92,6 +99,11 @@ def get_raw_exchange_info():
     except:
         try:
             exchange_info = client.get_exchange_info()
+            symbol_info = dict()
+            for sym in exchange_info['symbols']:
+                symbol = sym['symbol']
+                symbol_info[symbol] = sym
+            exchange_info['symbols'] = symbol_info
         except:
             return False
 
@@ -101,6 +113,7 @@ def get_raw_exchange_info():
 
     return exchange_info
 
+
 def get_all_pairs():
     exchange_info = get_raw_exchange_info()
     if exchange_info:
@@ -109,6 +122,17 @@ def get_all_pairs():
             pairs.append(info['symbol'])
         return pairs
     return False
+
+
+def get_symbol_info(pair):
+    try:
+        symbol_info = get_raw_exchange_info()[pair]
+        if symbol_info:
+            return symbol_info
+    except:
+        pass
+    return False
+
 
 def hello(name = None):
     if name:
