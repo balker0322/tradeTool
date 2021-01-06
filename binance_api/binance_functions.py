@@ -126,11 +126,25 @@ def get_all_pairs():
 
 def get_symbol_info(pair):
     try:
-        symbol_info = get_raw_exchange_info()[pair]
+        symbol_info = get_raw_exchange_info()['symbols'][pair]
         if symbol_info:
             return symbol_info
     except:
         pass
+    return False
+
+
+def get_tick_size(pair):
+    info = get_symbol_info(pair)
+    if info:
+        return info['filters'][0]['tickSize']
+    return False
+
+
+def get_step_size(pair):
+    info = get_symbol_info(pair)
+    if info:
+        return info['filters'][2]['stepSize']
     return False
 
 
