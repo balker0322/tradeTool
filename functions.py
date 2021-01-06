@@ -1,7 +1,7 @@
 from decimal import Decimal as d
 from model import Task
 from copy import deepcopy
-from binance_functions import *
+from binance_api import *
 import time
 
 def get_position_size(stop_loss, entry_price, risk_percentage, k = d("1.002")):
