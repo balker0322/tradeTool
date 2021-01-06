@@ -85,11 +85,9 @@ def get_equity(base_symbol='USDT'):
 
 def get_raw_exchange_info():
 
-    exchange_info = None
-
     # check if file is available
     try:
-        with open('exchange_info', 'rb') as file:
+        with open('binance_api/exchange_info', 'rb') as file:
             exchange_info = pickle.load(file)
     except:
         try:
@@ -98,11 +96,19 @@ def get_raw_exchange_info():
             return False
 
     # else create new file
-    with open('exchange_info', 'wb') as file:
+    with open('binance_api/exchange_info', 'wb') as file:
         pickle.dump(exchange_info, file)
 
     return exchange_info
 
+def get_all_pairs():
+    exchange_info = get_raw_exchange_info()
+    if exchange_info:
+        pairs = []
+        for info in exchange_info['symbols']:
+            pairs.append(info['symbol'])
+        return pairs
+    return False
 
 def hello(name = None):
     if name:
