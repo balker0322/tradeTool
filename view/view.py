@@ -76,7 +76,8 @@ class View():
         self.risk_percent_val =str(self.risk_input.var.get())
         entry_price_str = str(self.entry_price_input.var.get())
         try:
-            self.entry_price_val = str(float(entry_price_str))
+            if float(entry_price_str) != 0.0:
+                self.entry_price_val = str(float(entry_price_str))
         except:
             pass
         self.stop_loss_val = str(self.stop_loss_input.var.get())
