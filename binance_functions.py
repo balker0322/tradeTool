@@ -27,6 +27,14 @@ def get_balance(asset=False):
         return client.get_asset_balance(asset=asset)
     return client.get_account()['balances']
 
+def get_non_zero_balance():
+    non_zero_balance = []
+    for balance in get_balance():
+        amount = balance['free']
+        if float(amount) == 0.0:
+            continue
+        non_zero_balance.append(balance)
+    return non_zero_balance
 
 
 def get_equivalent(amount, original_sym, equavalent_sym):
@@ -40,7 +48,7 @@ def get_equivalent(amount, original_sym, equavalent_sym):
     get_equivalent('1', 'BTC', 'USDT')
     '''
 
-    if original_sym == original_sym:
+    if original_sym == equavalent_sym:
         return amount
 
     ticker = get_ticker(original_sym+equavalent_sym)
@@ -53,8 +61,6 @@ def get_equivalent(amount, original_sym, equavalent_sym):
 
     return False
 
-
-
 def get_ticker(symbol):
     try:
         ticker = client.get_symbol_ticker(symbol=symbol)['price']
@@ -62,11 +68,19 @@ def get_ticker(symbol):
         ticker = False
     return ticker
 
-
 def get_equity(base_symbol='USDT'):
-    all_balances = get_balance()
+    all_balances = get_non_zero_balance()
     total_equity = d('0.0')
-    pass
+    for balance in all_balances:
+        amount = balance['free']
+        original_sym = balance['asset']
+        equivalent_amount = get_equivalent(amount = amount,
+                                           original_sym = original_sym,
+                                           equavalent_sym = base_symbol)
+        if equivalent_amount:
+            total_equity += d(equivalent_amount)
+    return str(total_equity)
+
 
 
 def hello(name = None):
