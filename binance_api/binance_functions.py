@@ -6,6 +6,27 @@ import pickle
 
 
 client = Client(api_key, api_secret)
+test = True
+
+
+test_order_status = {'symbol': 'BTCUSDT',
+    'orderId': 3961371312,
+    'orderListId': 11389820,
+    'clientOrderId': 'Xa6oe6hgEFVJgHe7vA1pB6',
+    'price': '23400.00000000',
+    'origQty': '0.00100000',
+    'executedQty': '0.00000000',
+    'cummulativeQuoteQty': '0.00000000',
+    'status': 'NEW',
+    'timeInForce': 'GTC',
+    'type': 'STOP_LOSS_LIMIT',
+    'side': 'SELL',
+    'stopPrice': '23450.00000000',
+    'icebergQty': '0.00000000',
+    'time': 1608444879688,
+    'updateTime': 1608444879688,
+    'isWorking': False,
+    'origQuoteOrderQty': '0.00000000'}
 
 
 def limit_buy_order(symbol, quantity, Price):
@@ -25,6 +46,17 @@ def market_buy_order(symbol, quantity):
 
 def oco_sell_order(symbol, quantity, Price, stopPrice, stopLimitPrice):
     pass
+
+
+def get_order(symbol, orderId):
+    if test:
+        return test_order_status
+
+    return client.get_order(
+        symbol=symbol,
+        orderId=orderId)
+
+
 
 
 def get_balance(asset=False):
@@ -146,6 +178,16 @@ def get_step_size(pair):
     if info:
         return info['filters'][2]['stepSize']
     return False
+
+
+def get_max_buy_quantity():
+    # max_buy_quantity = current_balance / current_price
+    pass
+
+
+def get_max_sell_quantity():
+    pass
+
 
 
 def hello(name = None):
