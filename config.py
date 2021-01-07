@@ -17,3 +17,6 @@ ADJUSTMENT_CONSTANT = "1.002" # for trading fees adjustment in calculation
 TICK_SIZE = "0.01000000" # minimum price movement
 LOT_SIZE = "0.00000100"
 PAIR = "BTCUSDT"
+
+BASE_COIN = 'USDT'
+MAX_PERCENT_QUANTITY = '0.95' # maximum percentage of buy quantity

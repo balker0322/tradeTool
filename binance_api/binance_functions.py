@@ -1,9 +1,11 @@
 from binance.client import Client
 from binance.enums import *
 from decimal import Decimal as d
-from config import api_key, api_secret
+from config import api_key, api_secret,BASE_COIN, MAX_PERCENT_QUANTITY
 import pickle
 
+base_coin = BASE_COIN
+max_percent_quantity = MAX_PERCENT_QUANTITY
 
 client = Client(api_key, api_secret)
 test = True
@@ -108,7 +110,7 @@ def get_ticker(symbol):
     return ticker
 
 
-def get_equity(base_symbol='USDT'):
+def get_equity(base_symbol=base_coin):
     all_balances = get_non_zero_balance()
     total_equity = d('0.0')
     for balance in all_balances:
@@ -180,9 +182,13 @@ def get_step_size(pair):
     return False
 
 
-def get_max_buy_quantity():
-    # max_buy_quantity = current_balance / current_price
-    pass
+def get_max_buy_quantity(pair, base_symbol = base_coin, max_percent_quantity = max_percent_quantity):
+    balance = get_balance(base_symbol)['free']
+    ticker = get_ticker(pair)
+    max_quantity = d(balance) / d(ticker)
+    max_quantity *= d(max_percent_quantity)
+    step_size = d(get_step_size(pair))
+    return str(float(max_quantity-max_quantity%step_size))
 
 
 def get_max_sell_quantity():
