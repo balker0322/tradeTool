@@ -186,8 +186,15 @@ def get_max_buy_quantity(pair, base_symbol = base_coin, max_percent_quantity = m
     ticker = get_ticker(pair)
     max_quantity = d(balance) / d(ticker)
     max_quantity *= d(max_percent_quantity)
-    step_size = d(get_step_size(pair))
-    return str(float(max_quantity-max_quantity%step_size))
+    step_size = get_step_size(pair)
+    return roundoff_num(str(max_quantity), step_size)
+
+
+def roundoff_num(number, min_step):
+    res = d(number)-(d(number)%d(min_step))
+    res = str(res)
+    res = res.rstrip('0').rstrip('.') if '.' in res else res
+    return res
 
 
 def get_max_sell_quantity():
@@ -204,17 +211,3 @@ def hello(name = None):
 if __name__ == "__main__":
     print ("name is main")
 
-
-'''
-buy_order = client.order_market_buy(
-    symbol='BTCUSDT',
-    quantity=0.001)
-
-oco_order = client.create_oco_order(
-    symbol='BTCUSDT',
-    side='SELL',
-    quantity=0.00100000,
-    price='23600',
-    stopPrice='23450',
-    stopLimitPrice='23400',
-    stopLimitTimeInForce='GTC')
