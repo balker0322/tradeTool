@@ -3,6 +3,7 @@ from binance.enums import *
 from decimal import Decimal as d
 from config import api_key, api_secret,BASE_COIN, MAX_PERCENT_QUANTITY
 import pickle
+from .sample_response import *
 
 base_coin = BASE_COIN
 max_percent_quantity = MAX_PERCENT_QUANTITY
@@ -10,33 +11,14 @@ max_percent_quantity = MAX_PERCENT_QUANTITY
 client = Client(api_key, api_secret)
 test = True
 
-
-test_order_status = {'symbol': 'BTCUSDT',
-    'orderId': 3961371312,
-    'orderListId': 11389820,
-    'clientOrderId': 'Xa6oe6hgEFVJgHe7vA1pB6',
-    'price': '23400.00000000',
-    'origQty': '0.00100000',
-    'executedQty': '0.00000000',
-    'cummulativeQuoteQty': '0.00000000',
-    'status': 'NEW',
-    'timeInForce': 'GTC',
-    'type': 'STOP_LOSS_LIMIT',
-    'side': 'SELL',
-    'stopPrice': '23450.00000000',
-    'icebergQty': '0.00000000',
-    'time': 1608444879688,
-    'updateTime': 1608444879688,
-    'isWorking': False,
-    'origQuoteOrderQty': '0.00000000'}
-
-
 def limit_buy_order(symbol, quantity, Price):
     print("limit_buy_order({symbol}, {quantity}, {Price})".format(symbol, quantity, Price))
     pass
 
 
 def market_buy_order(symbol, quantity):
+    if test:
+        return test_market_buy_order
     try:
         buy_order = client.order_market_buy(
         symbol=symbol,
