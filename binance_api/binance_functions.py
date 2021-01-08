@@ -50,7 +50,7 @@ def oco_sell_order(symbol, quantity, Price, stopPrice, stopLimitPrice):
     pass
 
 
-def get_order(symbol, orderId):
+def get_order_status(symbol, orderId):
     if test:
         return test_order_status
 
