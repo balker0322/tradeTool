@@ -12,21 +12,46 @@ client = Client(api_key, api_secret)
 test = True
 
 
-def limit_buy_order(symbol, quantity, Price):
-    print("limit_buy_order({symbol}, {quantity}, {Price})".format(symbol, quantity, Price))
-    pass
+def order_limit_buy(symbol, quantity, price):
+    try:
+        response = client.order_limit_buy(
+            symbol = symbol,
+            quantity = quantity,
+            price = price)
+        return response
+    except:
+        return False
 
-def limit_sell_order(symbol, quantity, Price):
-    print("limit_buy_order({symbol}, {quantity}, {Price})".format(symbol, quantity, Price))
-    pass
+def order_limit_sell(symbol, quantity, price):
+    try:
+        response = client.order_limit_sell(
+            symbol = symbol,
+            quantity = quantity,
+            price = price)
+        return response
+    except:
+        return False
 
 
-def market_buy_order(symbol, quantity):
+def order_market_buy(symbol, quantity):
     if test:
         return test_market_buy_order
 
     try:
         response = client.order_market_buy(
+        symbol=symbol,
+        quantity=quantity)
+        return response
+    except:
+        return False
+
+
+def order_market_sell(symbol, quantity):
+    if test:
+        return test_market_sell_order
+
+    try:
+        response = client.order_market_sell(
         symbol=symbol,
         quantity=quantity)
         return response

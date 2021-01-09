@@ -41,21 +41,46 @@ def execute_task(task : Task):
     task_id = task.get_id()
 
     if current_step == 'BUY':
+        '''
+        response = buy_order(target_price, target_quantity)
+        if response:
+            # update step to checking buy order status
+            pass
+        
+        '''
         print('ID{}: creating buy order..'.format(task_id))
         time.sleep(1)
         next_step = 'GET_BUY_ORDER_STATUS'
 
     if current_step == 'GET_BUY_ORDER_STATUS':
+        '''
+        response = check_buy_order_status()
+        if response:
+            if response['status'] == 'FILLED':
+                actual_position_size = response['cummulativeQuoteQty']
+                actual_price = str(d(actual_position_size) / d(response['executedQty']))
+                # update step to create sell order
+        '''
         print('ID{}: waitng buy order to finish..'.format(task_id))
         time.sleep(1)
         next_step = 'SELL'
 
     if current_step == 'SELL':
+        '''
+        # calculate take profit price
+        # calculate stop loss price
+        # submit oco order
+        # if success response, proceed to next step
+        '''
         print('ID{}: creating sell order..'.format(task_id))
         time.sleep(1)
         next_step = 'GET_BUY_SELL_STATUS'
 
     if current_step == 'GET_BUY_SELL_STATUS':
+        '''
+        # get sell order status
+        # if sell order filled, calculate actual profit or loss
+        '''
         print('ID{}: waitng buy order to finish..'.format(task_id))
         time.sleep(1)
         next_step = 'DONE'
