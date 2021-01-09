@@ -82,7 +82,7 @@ class View():
             pass
         self.stop_loss_val = str(self.stop_loss_input.var.get())
         self.take_profit_val = str(self.take_profit_input.var.get())
-        self.pair = str(self.pair_input.var.get())
+        self.pair = str(self.pair_input.get_value()[1])
 
     def add_task(self):
         pass

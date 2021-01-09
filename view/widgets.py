@@ -1,5 +1,5 @@
 from tkinter import *
-from tkinter.ttk import Frame, Label, Entry
+from tkinter.ttk import Frame, Label, Entry, Combobox
 
 class slider_input():
 
@@ -30,7 +30,6 @@ class drop_down():
         self.master = master
         self.label = label
         self.label_width = label_width
-        self.var = StringVar()
         self.options = options
         self.initUI()
 
@@ -43,13 +42,13 @@ class drop_down():
         lbl = self.lbl
         lbl.pack(side=LEFT, padx=5, pady=5)
 
-        OPTIONS = self.options
-
-        self.var.set(OPTIONS[0]) # default value
-
-        self.entry = OptionMenu(frame, self.var, *OPTIONS)
+        self.entry = Combobox(frame, values = self.options)
         entry = self.entry
         entry.pack(fill=X, padx=5, expand=True)
+        entry.current(0)
+
+    def get_value(self):
+        return self.entry.current(), self.entry.get()
 
         
 class entry():
