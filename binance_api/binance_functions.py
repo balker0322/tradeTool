@@ -11,7 +11,12 @@ max_percent_quantity = MAX_PERCENT_QUANTITY
 client = Client(api_key, api_secret)
 test = True
 
+
 def limit_buy_order(symbol, quantity, Price):
+    print("limit_buy_order({symbol}, {quantity}, {Price})".format(symbol, quantity, Price))
+    pass
+
+def limit_sell_order(symbol, quantity, Price):
     print("limit_buy_order({symbol}, {quantity}, {Price})".format(symbol, quantity, Price))
     pass
 
@@ -199,15 +204,10 @@ def roundoff_num(number, min_step):
     return res
 
 
-def get_max_sell_quantity():
-    pass
-
-
-
-def hello(name = None):
-    if name:
-        return name
-    return "hi"
+def get_max_sell_quantity(pair, base_symbol = base_coin):
+    balance = get_balance(pair.replace(base_symbol, ""))['free']
+    step_size = get_step_size(pair)
+    return roundoff_num(str(balance), step_size)
 
 
 if __name__ == "__main__":
