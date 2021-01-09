@@ -156,7 +156,7 @@ def get_raw_exchange_info():
     # check if file is available
     try:
         with open('binance_api/exchange_info', 'rb') as file:
-            exchange_info = pickle.load(file)
+            exchange_info = pickle.load(file)         
     except:
         try:
             exchange_info = client.get_exchange_info()
@@ -165,12 +165,12 @@ def get_raw_exchange_info():
                 symbol = sym['symbol']
                 symbol_info[symbol] = sym
             exchange_info['symbols'] = symbol_info
+
+            # else create new file
+            with open('binance_api/exchange_info', 'wb') as file:
+                pickle.dump(exchange_info, file)
         except:
             return False
-
-    # else create new file
-    with open('binance_api/exchange_info', 'wb') as file:
-        pickle.dump(exchange_info, file)
 
     return exchange_info
 
