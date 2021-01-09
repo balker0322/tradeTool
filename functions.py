@@ -31,6 +31,9 @@ def get_take_profit(reward, position_size, entry_price, k):
 def dec_to_percent_disp(dec_num):
     return "{0:.2f} %".format(d(dec_num)*d("100.00"))
 
+def get_available_pairs(base_symbol : str):
+    return get_all_pairs(base_symbol)
+
 def execute_task(task : Task):
     task = deepcopy(task)
     next_step = task.get_next_step()

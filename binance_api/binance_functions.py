@@ -58,8 +58,6 @@ def get_order_status(symbol, orderId):
         return False
 
 
-
-
 def get_balance(asset=False):
     if asset:
         return client.get_asset_balance(asset=asset)
@@ -147,12 +145,16 @@ def get_raw_exchange_info():
     return exchange_info
 
 
-def get_all_pairs():
+def get_all_pairs(base_symbol = None):
     exchange_info = get_raw_exchange_info()
     if exchange_info:
         pairs = []
         for info in exchange_info['symbols']:
-            pairs.append(info['symbol'])
+            if base_symbol:
+                if info[-len(base_symbol):] == base_symbol:
+                    pairs.append(info)
+                continue
+            pairs.append(info)
         return pairs
     return False
 

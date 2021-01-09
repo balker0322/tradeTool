@@ -7,6 +7,11 @@ import time
 
 class Controller():
     def __init__(self):
+
+        self.base_coin = 'USDT'
+        self.base_coin_balance = ''
+        self.equity = ''
+
         self.position_size_percent_min = POSITION_SIZE_MIN
         self.position_size_percent_max = POSITION_SIZE_MAX
         self.rr_ratio_min = RR_RATIO_MIN
@@ -17,11 +22,7 @@ class Controller():
         self.k = ADJUSTMENT_CONSTANT
         self.tick_size = TICK_SIZE
         self.lot_size = LOT_SIZE
-        self.pair_list = ['BTCUSDT', 'ETHUSDT', 'XRPUSDT', 'EOSUSDT']
-
-        self.base_coin = 'USDT'
-        self.base_coin_balance = ''
-        self.equity = ''
+        self.pair_list = get_available_pairs(base_coin)
 
         self.task_list = []
         self.new_task = None
