@@ -113,13 +113,12 @@ class Controller():
             if equity:
                 self.equity = equity
                 
+            self.new_task.set_pair(self.view.pair)
             self.new_task.set_risk(self.get_risk())
             self.new_task.set_reward(self.get_reward())
-            self.new_task.set_position_size(self.set_position_size())
-            self.new_task.set_buy_price(self.set_buy_price())
+            self.new_task.set_position_size(self.get_position_size())
+            self.new_task.set_buy_price(self.get_buy_price())
 
-            for info in self.view.trade_options:
-                self.new_task.task_info[info] = self.view.trade_options[info]
             self.new_task.set_task_to_active()
             self.new_task.set_next_step('BUY')
             self.view.execute_button_pressed = False
@@ -133,9 +132,9 @@ class Controller():
         rr_ratio = self.view.rr_ratio_val
         return get_product(self.equity, risk_percent, rr_ratio)
 
-    def set_position_size(self):
+    def get_position_size(self):
         pos_size_percent = self.view.position_size_val
         return get_product(self.equity, pos_size_percent)
 
-    def set_buy_price(self):
+    def get_buy_price(self):
         return self.view.entry_price_val

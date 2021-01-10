@@ -40,66 +40,62 @@ def get_product(*args):
         product *= d(num)
     return str(product)
         
-
 def execute_task(task : Task):
-    task = deepcopy(task)
     next_step = task.get_next_step()
-    current_step = next_step
-    task_id = task.get_id()
 
-    if current_step == 'BUY':
-        '''
-        response = buy_order(target_price, target_quantity)
-        if response:
-            # update step to checking buy order status
-            pass
-        
-        '''
-        print('ID{}: creating buy order..'.format(task_id))
-        time.sleep(1)
-        next_step = 'GET_BUY_ORDER_STATUS'
+    if next_step == 'BUY':
+        return execute_buy(task)
 
-    if current_step == 'GET_BUY_ORDER_STATUS':
-        '''
-        response = check_buy_order_status()
-        if response:
-            if response['status'] == 'FILLED':
-                actual_position_size = response['cummulativeQuoteQty']
-                actual_price = str(d(actual_position_size) / d(response['executedQty']))
-                # update step to create sell order
-        '''
-        print('ID{}: waitng buy order to finish..'.format(task_id))
-        time.sleep(1)
-        next_step = 'SELL'
+    if next_step == 'GET_BUY_ORDER_STATUS':
+        return execute_wait_buy(task)
 
-    if current_step == 'SELL':
-        '''
-        # calculate take profit price
-        # calculate stop loss price
-        # submit oco order
-        # if success response, proceed to next step
-        '''
-        print('ID{}: creating sell order..'.format(task_id))
-        time.sleep(1)
-        next_step = 'GET_BUY_SELL_STATUS'
+    if next_step == 'SELL':
+        return execute_sell(task)
 
-    if current_step == 'GET_BUY_SELL_STATUS':
-        '''
-        # get sell order status
-        # if sell order filled, calculate actual profit or loss
-        '''
-        print('ID{}: waitng buy order to finish..'.format(task_id))
-        time.sleep(1)
-        next_step = 'DONE'
+    if next_step == 'GET_BUY_SELL_STATUS':
+        return execute_wait_sell(task)
 
-    if current_step == 'DONE':
-        # print('ID:{} task done'.format(task_id))
-        task.set_task_to_inactive()
+    if next_step == 'DONE':
+        return execute_done(task)
 
-    if current_step == 'CANCEL':
-        print('ID:{} cancel'.format(task_id))
-        task.set_task_to_inactive()
+    if next_step == 'CANCEL':
+        return execute_cancel(task)
 
-    task.set_next_step(next_step)
 
+def execute_buy(task : Task):
+    print('execute_buy...')
+    task = deepcopy(task)
+    
+    symbol = task.get_pair()
+    quantity = get_buy_quantity(symbol, task.get_position_size())
+    price = task.get_buy_price()
+    response = order_limit_buy(symbol, quantity, price)
+    if response:
+        print(response)
+
+    return task
+
+def execute_wait_buy(task : Task):
+    print('execute_wait_buy...')
+    task = deepcopy(task)
+    return task
+
+def execute_sell(task : Task):
+    print('execute_sell...')
+    task = deepcopy(task)
+    return task
+
+def execute_wait_sell(task : Task):
+    print('execute_wait_sell...')
+    task = deepcopy(task)
+    return task
+
+def execute_done(task : Task):
+    print('execute_done...')
+    task = deepcopy(task)
+    return task
+
+def execute_cancel(task : Task):
+    print('execute_cancel...')
+    task = deepcopy(task)
     return task

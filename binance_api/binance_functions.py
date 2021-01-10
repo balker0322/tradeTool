@@ -128,7 +128,6 @@ def get_equivalent(amount, original_sym, equavalent_sym):
 
     return False
 
-
 def get_ticker(symbol):
     try:
         ticker = client.get_symbol_ticker(symbol=symbol)['price']
@@ -221,18 +220,22 @@ def get_max_buy_quantity(pair, base_symbol = base_coin, max_percent_quantity = m
     step_size = get_step_size(pair)
     return roundoff_num(str(max_quantity), step_size)
 
+def get_max_sell_quantity(pair, base_symbol = base_coin):
+    balance = get_balance(pair.replace(base_symbol, ""))['free']
+    step_size = get_step_size(pair)
+    return roundoff_num(str(balance), step_size)
+
+def get_buy_quantity(pair, price):
+    ticker = get_ticker(pair)
+    quantity = d(price) / d(ticker)
+    step_size = get_step_size(pair)
+    return roundoff_num(str(quantity), step_size)
 
 def roundoff_num(number, min_step):
     res = d(number)-(d(number)%d(min_step))
     res = str(res)
     res = res.rstrip('0').rstrip('.') if '.' in res else res
     return res
-
-
-def get_max_sell_quantity(pair, base_symbol = base_coin):
-    balance = get_balance(pair.replace(base_symbol, ""))['free']
-    step_size = get_step_size(pair)
-    return roundoff_num(str(balance), step_size)
 
 
 if __name__ == "__main__":
