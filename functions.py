@@ -110,6 +110,12 @@ def execute_wait_buy(task : Task):
 def execute_sell(task : Task):
     print('execute_sell...')
     task = deepcopy(task)
+
+    # calculate take profit and stop loss price
+    # create oco order
+
+    # save order id'ss
+
     return task
 
 def execute_wait_sell(task : Task):
