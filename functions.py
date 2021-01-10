@@ -72,25 +72,39 @@ def execute_buy(task : Task):
     response = order_limit_buy(symbol, quantity, price)
 
     if response:
-        # if response['status'] == 'FILLED':
-            # actual_position_size = response['cummulativeQuoteQty']
-            # actual_buy_price = str(d(actual_position_size) / d(response['executedQty']))
-            # task.set_position_size(actual_position_size)
-            # task.set_buy_price(actual_buy_price)
             
-        next_step = 'GET_BUY_ORDER_STATUS'
         buy_order_id  = response['orderId']
-        task.set_next_step(next_step)
         task.set_buy_order_id(buy_order_id)
+
+        next_step = 'GET_BUY_ORDER_STATUS'
+        task.set_next_step(next_step)
 
         return task
 
     task.set_next_step('CANCEL')
     return task
 
+
 def execute_wait_buy(task : Task):
     print('execute_wait_buy...')
     task = deepcopy(task)
+
+    symbol = task.get_pair()
+    order_id = task.get_buy_order_id()
+    response = get_order_status(symbol, order_id)
+
+    if response:
+        if response['status'] == 'FILLED':
+
+            actual_position_size = response['cummulativeQuoteQty']
+            task.set_position_size(actual_position_size)
+
+            actual_buy_price = str(d(actual_position_size) / d(response['executedQty']))
+            task.set_buy_price(actual_buy_price)
+
+            next_step = 'SELL'
+            task.set_next_step(next_step)
+
     return task
 
 def execute_sell(task : Task):
