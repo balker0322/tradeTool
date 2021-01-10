@@ -13,6 +13,8 @@ test = True
 
 
 def order_limit_buy(symbol, quantity, price):
+    if test:
+        return test_market_buy_order
     try:
         response = client.order_limit_buy(
             symbol = symbol,

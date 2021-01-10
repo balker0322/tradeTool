@@ -70,9 +70,22 @@ def execute_buy(task : Task):
     quantity = get_buy_quantity(symbol, task.get_position_size())
     price = task.get_buy_price()
     response = order_limit_buy(symbol, quantity, price)
-    if response:
-        print(response)
 
+    if response:
+        # if response['status'] == 'FILLED':
+            # actual_position_size = response['cummulativeQuoteQty']
+            # actual_buy_price = str(d(actual_position_size) / d(response['executedQty']))
+            # task.set_position_size(actual_position_size)
+            # task.set_buy_price(actual_buy_price)
+            
+        next_step = 'GET_BUY_ORDER_STATUS'
+        buy_order_id  = response['orderId']
+        task.set_next_step(next_step)
+        task.set_buy_order_id(buy_order_id)
+
+        return task
+
+    task.set_next_step('CANCEL')
     return task
 
 def execute_wait_buy(task : Task):
