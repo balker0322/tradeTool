@@ -10,7 +10,7 @@ class Controller():
 
         self.base_coin = 'USDT'
         self.base_coin_balance = ''
-        self.equity = ''
+        self.equity = '900.0'
 
         self.position_size_percent_min = POSITION_SIZE_MIN
         self.position_size_percent_max = POSITION_SIZE_MAX
@@ -73,8 +73,9 @@ class Controller():
         
         # execute pending tasks and update database
         for task in self.task_list:
-            new_task_details = execute_task(task)
-            self.model.update_task(new_task_details)        
+            pass
+            # new_task_details = execute_task(task)
+            # self.model.update_task(new_task_details)        
 
     def get_stop_loss_range(self):
         risk_percent_val = self.view.risk_percent_val
@@ -107,8 +108,34 @@ class Controller():
         if self.view.execute_button_pressed:
             self.accept_new_task = False
             self.new_task = Task()
+
+            equity = get_equity(self.base_coin)
+            if equity:
+                self.equity = equity
+                
+            self.new_task.set_risk(self.get_risk())
+            self.new_task.set_reward(self.get_reward())
+            self.new_task.set_position_size(self.set_position_size())
+            self.new_task.set_buy_price(self.set_buy_price())
+
             for info in self.view.trade_options:
                 self.new_task.task_info[info] = self.view.trade_options[info]
             self.new_task.set_task_to_active()
             self.new_task.set_next_step('BUY')
             self.view.execute_button_pressed = False
+
+    def get_risk(self):
+        risk_percent = self.view.risk_percent_val
+        return get_product(self.equity, risk_percent)
+
+    def get_reward(self):
+        risk_percent = self.view.risk_percent_val
+        rr_ratio = self.view.rr_ratio_val
+        return get_product(self.equity, risk_percent, rr_ratio)
+
+    def set_position_size(self):
+        pos_size_percent = self.view.position_size_val
+        return get_product(self.equity, pos_size_percent)
+
+    def set_buy_price(self):
+        return self.view.entry_price_val

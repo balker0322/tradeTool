@@ -34,6 +34,13 @@ def dec_to_percent_disp(dec_num):
 def get_available_pairs(base_symbol : str):
     return get_all_pairs(base_symbol)
 
+def get_product(*args):
+    product = d('1.0')
+    for num in args:
+        product *= d(num)
+    return str(product)
+        
+
 def execute_task(task : Task):
     task = deepcopy(task)
     next_step = task.get_next_step()
