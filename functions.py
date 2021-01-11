@@ -141,12 +141,16 @@ def execute_sell(task : Task):
 
     # save order id's
     if response:
+        
         for order in response['orderReports']:
             orderId = order['orderId']
             if order['type'] == 'LIMIT_MAKER':
                 task.set_take_profit_order_id(orderId)
             if order['type'] == 'STOP_LOSS_LIMIT':
                 task.set_stop_loss_order_id(orderId)
+
+        next_step = 'GET_BUY_SELL_STATUS'
+        task.set_next_step(next_step)
 
     return task
 
