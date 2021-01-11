@@ -19,10 +19,9 @@ class Controller():
         self.risk_min = RISK_MIN
         self.risk_max = RISK_MAX
         self.entry_price = ENTRY_PRICE
-        self.k = ADJUSTMENT_CONSTANT
         self.tick_size = TICK_SIZE
         self.lot_size = LOT_SIZE
-        self.pair_list = get_available_pairs(base_coin)
+        self.pair_list = get_available_pairs(self.base_coin)
 
         self.task_list = []
         self.new_task = None
@@ -44,9 +43,8 @@ class Controller():
         take_profit_val = self.view.take_profit_val
         stop_loss_val = self.view.stop_loss_val
         entry_price_val = self.view.entry_price_val
-        k = self.k
-        position_size_val = get_position_size(stop_loss_val, entry_price_val, risk_percent_val, k)
-        reward_percent_val = get_reward_percentage(take_profit_val, entry_price_val, position_size_val, k)
+        position_size_val = get_position_size(stop_loss_val, entry_price_val, risk_percent_val)
+        reward_percent_val = get_reward_percentage(take_profit_val, entry_price_val, position_size_val)
 
         self.view.stop_loss_min, self.view.stop_loss_max = self.get_stop_loss_range()
         self.view.position_size_val = position_size_val
@@ -84,8 +82,8 @@ class Controller():
         entry_price_val = self.view.entry_price_val
         k = self.k
 
-        stop_loss_max = get_stop_loss(risk_percent_val, position_size_percent_max, entry_price_val, k)
-        stop_loss_min = get_stop_loss(risk_percent_val, position_size_percent_min, entry_price_val, k)
+        stop_loss_max = get_stop_loss(risk_percent_val, position_size_percent_max, entry_price_val)
+        stop_loss_min = get_stop_loss(risk_percent_val, position_size_percent_min, entry_price_val)
 
         return stop_loss_min, stop_loss_max
 
@@ -95,12 +93,11 @@ class Controller():
         rr_ratio_max = self.rr_ratio_max
         position_size_val = self.view.position_size_val
         entry_price_val = self.view.entry_price_val
-        k = self.k
 
         reward_min = get_reward(rr_ratio_min, risk_percent_val)
         reward_max = get_reward(rr_ratio_max, risk_percent_val)
-        take_profit_min = get_take_profit(reward_min, position_size_val, entry_price_val, k)
-        take_profit_max = get_take_profit(reward_max, position_size_val, entry_price_val, k)
+        take_profit_min = get_take_profit(reward_min, position_size_val, entry_price_val)
+        take_profit_max = get_take_profit(reward_max, position_size_val, entry_price_val)
 
         return take_profit_min, take_profit_max
     

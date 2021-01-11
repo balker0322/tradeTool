@@ -3,12 +3,16 @@ from model import Task
 from copy import deepcopy
 from binance_api import *
 import time
+from config import ADJUSTMENT_CONSTANT, BASE_COIN
 
-def get_position_size(stop_loss, entry_price, risk_percentage, k = d("1.002")):
+k = ADJUSTMENT_CONSTANT
+base_coin = BASE_COIN
+
+def get_position_size(stop_loss, entry_price, risk_percentage, k = k):
     position_size = d(risk_percentage) / (d("1.00") - (d(stop_loss) / (d(entry_price)*d(k))))
     return str(position_size)
 
-def get_reward_percentage(take_profit, entry_price, position_size, k = d("1.002")):
+def get_reward_percentage(take_profit, entry_price, position_size, k = k):
     reward_percentage = d(position_size) * ( (d(take_profit) / (d(entry_price)*d(k))) - d("1.00") )
     return str(reward_percentage)
 
@@ -20,11 +24,11 @@ def get_rr_ratio(reward, risk):
     rr_ratio = d(reward) / d(risk)
     return str(rr_ratio)
 
-def get_stop_loss(risk, position_size, entry_price, k):
+def get_stop_loss(risk, position_size, entry_price, k = k):
     stop_loss = d(k) * d(entry_price) * (d("1.00") - (d(risk)/d(position_size)))
     return str(stop_loss)
 
-def get_take_profit(reward, position_size, entry_price, k):
+def get_take_profit(reward, position_size, entry_price, k = k):
     take_profit = d(k) * d(entry_price) * (d("1.00") + (d(reward)/d(position_size)))
     return str(take_profit)
 
@@ -112,9 +116,37 @@ def execute_sell(task : Task):
     task = deepcopy(task)
 
     # calculate take profit and stop loss price
-    # create oco order
+    symbol = task.get_pair()
+    step_size = get_step_size(symbol)
+    tick_size = get_tick_size(symbol)
+    risk = task.get_risk()
+    reward = task.get_reward()
+    entry_price = task.get_buy_price()
+    position_size = task.get_position_size()
+    coin =  symbol.replace(base_coin, '')
 
-    # save order id'ss
+    price = get_take_profit(reward, position_size, entry_price)
+    stopPrice = get_stop_loss(risk, position_size, entry_price)
+    stopLimitPrice = get_product(stopPrice, '0.90')
+    quantity = get_balance(coin)
+
+    # create oco order
+    response = oco_sell_order(
+        symbol = symbol,
+        quantity = roundoff_num(quantity, tick_size),
+        price = roundoff_num(price, step_size),
+        stopPrice = roundoff_num(stopPrice, step_size),
+        stopLimitPrice = roundoff_num(stopLimitPrice, step_size)
+    )
+
+    # save order id's
+    if response:
+        for order in response['orderReports']:
+            orderId = order['orderId']
+            if order['type'] == 'LIMIT_MAKER':
+                task.set_take_profit_order_id(orderId)
+            if order['type'] == 'STOP_LOSS_LIMIT':
+                task.set_stop_loss_order_id(orderId)
 
     return task
 
