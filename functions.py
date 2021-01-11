@@ -136,10 +136,10 @@ def execute_sell(task : Task):
     # create oco order
     response = oco_sell_order(
         symbol = symbol,
-        quantity = roundoff_num(quantity, tick_size),
-        price = roundoff_num(price, step_size),
-        stopPrice = roundoff_num(stopPrice, step_size),
-        stopLimitPrice = roundoff_num(stopLimitPrice, step_size)
+        quantity = roundoff_num(quantity, step_size),
+        price = roundoff_num(price, tick_size),
+        stopPrice = roundoff_num(stopPrice, tick_size),
+        stopLimitPrice = roundoff_num(stopLimitPrice, tick_size)
     )
 
     if response:
@@ -171,10 +171,10 @@ def execute_wait_sell(task : Task):
     if response:
         if response['status'] == 'FILLED':
 
-            actual_sell_price = response['cummulativeQuoteQty']
+            actual_sell_price = str(d(response['cummulativeQuoteQty']) / d(response['executedQty']))
             task.set_sell_price(actual_sell_price)
 
-            profit = d(actual_sell_price) - d(task.get_buy_price())
+            profit = str(d(actual_sell_price) - d(task.get_buy_price()))
             task.set_profit(profit)
 
             next_step = 'DONE'
@@ -189,10 +189,10 @@ def execute_wait_sell(task : Task):
     if response:
         if response['status'] == 'FILLED':
 
-            actual_sell_price = response['cummulativeQuoteQty']
+            actual_sell_price = str(d(response['cummulativeQuoteQty']) / d(response['executedQty']))
             task.set_sell_price(actual_sell_price)
 
-            profit = d(actual_sell_price) - d(task.get_buy_price())
+            profit = str(d(actual_sell_price) - d(task.get_buy_price()))
             task.set_profit(profit)
 
             next_step = 'DONE'

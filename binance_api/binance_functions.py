@@ -9,7 +9,7 @@ base_coin = BASE_COIN
 max_percent_quantity = MAX_PERCENT_QUANTITY
 
 client = Client(api_key, api_secret)
-test = True
+test = False
 
 
 def order_limit_buy(symbol, quantity, price):
