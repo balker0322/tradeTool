@@ -139,9 +139,9 @@ def execute_sell(task : Task):
         stopLimitPrice = roundoff_num(stopLimitPrice, step_size)
     )
 
-    # save order id's
     if response:
-        
+
+        # save order id's
         for order in response['orderReports']:
             orderId = order['orderId']
             if order['type'] == 'LIMIT_MAKER':
@@ -157,6 +157,45 @@ def execute_sell(task : Task):
 def execute_wait_sell(task : Task):
     print('execute_wait_sell...')
     task = deepcopy(task)
+
+    symbol = task.get_pair()
+
+    # check take profit order status
+    order_id = task.get_take_profit_order_id()
+    response = get_order_status(symbol, order_id)
+
+    if response:
+        if response['status'] == 'FILLED':
+
+            actual_sell_price = response['cummulativeQuoteQty']
+            task.set_sell_price(actual_sell_price)
+
+            profit = d(actual_sell_price) - d(task.get_buy_price())
+            task.set_profit(profit)
+
+            next_step = 'DONE'
+            task.set_next_step(next_step)
+
+            return task
+
+    # check stop loss order status
+    order_id = task.get_stop_loss_order_id()
+    response = get_order_status(symbol, order_id)
+
+    if response:
+        if response['status'] == 'FILLED':
+
+            actual_sell_price = response['cummulativeQuoteQty']
+            task.set_sell_price(actual_sell_price)
+
+            profit = d(actual_sell_price) - d(task.get_buy_price())
+            task.set_profit(profit)
+
+            next_step = 'DONE'
+            task.set_next_step(next_step)
+
+            return task
+
     return task
 
 def execute_done(task : Task):
