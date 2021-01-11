@@ -113,6 +113,7 @@ def execute_wait_buy(task : Task):
 
     return task
 
+
 def execute_sell(task : Task):
     print('execute_sell...')
     task = deepcopy(task)
@@ -155,6 +156,7 @@ def execute_sell(task : Task):
         task.set_next_step(next_step)
 
     return task
+
 
 def execute_wait_sell(task : Task):
     print('execute_wait_sell...')
@@ -200,6 +202,7 @@ def execute_wait_sell(task : Task):
 
     return task
 
+
 def execute_done(task : Task):
     print('execute_done...')
     task = deepcopy(task)
@@ -210,6 +213,7 @@ def execute_done(task : Task):
     task.set_status('COMPLETED')
     
     return task
+
 
 def execute_cancel(task : Task):
     print('execute_cancel...')
