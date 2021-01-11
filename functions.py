@@ -171,10 +171,11 @@ def execute_wait_sell(task : Task):
     if response:
         if response['status'] == 'FILLED':
 
+            cummulativeQuoteQty = d(response['cummulativeQuoteQty'])
             actual_sell_price = str(d(response['cummulativeQuoteQty']) / d(response['executedQty']))
             task.set_sell_price(actual_sell_price)
 
-            profit = str(d(actual_sell_price) - d(task.get_buy_price()))
+            profit = str(cummulativeQuoteQty - d(task.get_position_size()))
             task.set_profit(profit)
 
             next_step = 'DONE'
@@ -189,10 +190,11 @@ def execute_wait_sell(task : Task):
     if response:
         if response['status'] == 'FILLED':
 
+            cummulativeQuoteQty = d(response['cummulativeQuoteQty'])
             actual_sell_price = str(d(response['cummulativeQuoteQty']) / d(response['executedQty']))
             task.set_sell_price(actual_sell_price)
 
-            profit = str(d(actual_sell_price) - d(task.get_buy_price()))
+            profit = str(cummulativeQuoteQty - d(task.get_position_size()))
             task.set_profit(profit)
 
             next_step = 'DONE'
