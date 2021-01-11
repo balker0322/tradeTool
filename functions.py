@@ -64,6 +64,8 @@ def execute_task(task : Task):
 
     if next_step == 'CANCEL':
         return execute_cancel(task)
+    
+    return False
 
 
 def execute_buy(task : Task):
@@ -128,7 +130,7 @@ def execute_sell(task : Task):
     price = get_take_profit(reward, position_size, entry_price)
     stopPrice = get_stop_loss(risk, position_size, entry_price)
     stopLimitPrice = get_product(stopPrice, '0.90')
-    quantity = get_balance(coin)
+    quantity = get_balance(coin)['free']
 
     # create oco order
     response = oco_sell_order(
@@ -201,9 +203,21 @@ def execute_wait_sell(task : Task):
 def execute_done(task : Task):
     print('execute_done...')
     task = deepcopy(task)
+
+    next_step = 'NONE'
+    task.set_next_step(next_step)
+
+    task.set_status('COMPLETED')
+    
     return task
 
 def execute_cancel(task : Task):
     print('execute_cancel...')
     task = deepcopy(task)
+
+    next_step = 'NONE'
+    task.set_next_step(next_step)
+
+    task.set_status('CANCELLED')
+
     return task
