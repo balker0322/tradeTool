@@ -21,6 +21,8 @@ class View():
         self.take_profit_min = "0"
         self.take_profit_max = "0"
 
+        self.task_list = []
+
         self.root = Tk()
         self.main_frame = Frame(self.root)
         self.main_frame.grid(row=0, column=0, padx=(10, 10), pady=(10, 10))
@@ -54,6 +56,19 @@ class View():
         self.execute_button = Button(self.button_frame, text = "Execute", command = self.execute_trade)
         self.execute_button.pack(anchor = CENTER)
 
+        # table for task status
+        # self.task_table_frame = LabelFrame(self.main_frame, text="Trade Summary")
+        # self.task_table_frame.pack(fill=X)
+        self.task_table_frame = LabelFrame(self.main_frame, text="Tasks")
+        self.task_table_frame.pack(fill=X)
+        self.table = Table(master=self.task_table_frame, columns = ('Date', 'Status', 'Profit'))
+        # self.entry_price_diplay = display_value(master=self.task_table_frame, label="Entry Price:", value="100")
+        # self.stop_loss_display = display_value(master=self.task_table_frame, label="Stop Loss:", value="100")
+        # self.take_profit_display = display_value(master=self.task_table_frame, label="Take Profit:", value="100")
+        # self.risk_percentage_diplay = display_value(master=self.task_table_frame, label="Risk Percentage:", value="100")
+        # self.rr_ratio_diplay = display_value(master=self.task_table_frame, label="RR ratio:", value="100")
+        # self.position_size_diplay = display_value(master=self.task_table_frame, label="Position Size Percent:", value="100")
+
         self.accept_new_task = True
 
 
@@ -63,6 +78,10 @@ class View():
         if self.accept_new_task:
             self.execute_button['state'] = NORMAL
         self.update_display_summary()
+        self.update_task_table(self.task_list)
+    
+    def update_task_table(self, task_list):
+        pass
     
     def update_display_summary(self):
         self.position_size_diplay.update(self.dec_to_percent_disp(self.position_size_val))
@@ -88,6 +107,10 @@ class View():
         pass
 
     def execute_trade(self):
+
+        # disable execute button
+        self.execute_button['state'] = DISABLED
+    
         self.execute_button_pressed = True
         trade_options = dict()
         trade_options['risk_percent_val'] = self.risk_percent_val
@@ -99,11 +122,10 @@ class View():
         trade_options['pair'] = self.pair
         self.trade_options = trade_options
 
-        # disable execute button
-        self.execute_button['state'] = DISABLED
-    
+
     def run(self):
         self.root.mainloop()
+
 
     def dec_to_percent_disp(self, dec_num):
         return "{0:.2f} %".format(float(dec_num)*float("100.00"))

@@ -31,8 +31,10 @@ class Model():
         rows = list()
         with sqlite3.connect(self.db) as con:
             cur = con.cursor()
-            columns = ", ".join(self.info_list)
-            cur.execute("SELECT " + columns + " FROM tasks")
+            # columns = ", ".join(self.info_list)
+            # cur.execute("SELECT " + columns + " FROM tasks")
+            status = 'ACTIVE'
+            cur.execute("SELECT * FROM tasks WHERE status=?", (status,))
             rows = cur.fetchall()
 
         task_list = []

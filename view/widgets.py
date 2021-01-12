@@ -1,5 +1,5 @@
 from tkinter import *
-from tkinter.ttk import Frame, Label, Entry, Combobox
+from tkinter.ttk import Frame, Label, Entry, Combobox, Treeview
 
 class slider_input():
 
@@ -101,6 +101,53 @@ class display_value():
             self.value = value
         selection = self.value
         self.lbl2.config(text = selection)
+
+class Table():
+
+    def __init__(self, master, columns):
+        self.master = master
+        self.columns = columns
+        # self.label_width = label_width
+        # self.value = value
+        self.initUI()
+
+    def initUI(self):
+
+        self.tree = Treeview(self.master, self.columns)
+
+        # Set the heading (Attribute Names)
+        self.tree.heading('#0', text='Item')
+        self.tree.heading('#1', text='Name')
+        self.tree.heading('#2', text='ID')
+
+        # Specify attributes of the columns (We want to stretch it!)
+        self.tree.column('#0', stretch=YES)
+        self.tree.column('#1', stretch=YES)
+        self.tree.column('#2', stretch=YES)
+
+        self.tree.grid(row=4, columnspan=4, sticky='nsew')
+
+
+
+        # self.frame1 = Frame(self.master)
+        # frame1 = self.frame1
+        # frame1.pack(fill=X)
+
+        # self.lbl1 = Label(frame1, text=self.label, width=self.label_width)
+        # lbl1 = self.lbl1
+        # lbl1.pack(side=LEFT, padx=5, pady=5)
+        
+        # self.lbl2 = Label(frame1, text=self.value, width=self.label_width)
+        # lbl2 = self.lbl2
+        # lbl2.pack(fill=X, padx=5, expand=True)
+    
+    def update(self, value = None):
+        pass
+        # if value:
+        #     self.value = value
+        # selection = self.value
+        # self.lbl2.config(text = selection)
+
     
 class container(Frame):
     def __init__(self):

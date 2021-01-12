@@ -51,6 +51,7 @@ class Controller():
         self.view.take_profit_min, self.view.take_profit_max = self.get_take_profit_range()
         self.view.rr_ratio_val = get_rr_ratio(reward_percent_val, risk_percent_val)
         self.view.accept_new_task = self.accept_new_task
+        self.view.task_list = self.task_list
         self.view.update_gui()
         self.view.get_user_input()
 
@@ -60,20 +61,26 @@ class Controller():
         # add new task on database
         if self.new_task:
             self.model.add_new_task(self.new_task)
-            print("New task is added on database")
+            # print("New task is added on database")
             self.new_task = None
             self.accept_new_task = True
+            # x = self.model.get_all_pending_tasks()
+            # print(x[-1].task_info)
             x = self.model.get_all_pending_tasks()
-            print(x[-1].task_info)
+            print(len(x))
 
-        # get all pending tasks for exection from database
-        self.task_list = self.model.get_all_pending_tasks()
+        # get data from database
+        self.get_db_data()
         
         # execute pending tasks and update database
         for task in self.task_list:
-            pass
-            # new_task_details = execute_task(task)
-            # self.model.update_task(new_task_details)        
+            if task.get_status() == 'ACTIVE':
+                pass
+                # new_task_details = execute_task(task)
+                # self.model.update_task(new_task_details)      
+
+    def get_db_data(self):
+        self.task_list = self.model.get_all_pending_tasks()
 
     def get_stop_loss_range(self):
         risk_percent_val = self.view.risk_percent_val
