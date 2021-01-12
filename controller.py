@@ -80,7 +80,6 @@ class Controller():
         position_size_percent_min = self.position_size_percent_min
         position_size_percent_max = self.position_size_percent_max
         entry_price_val = self.view.entry_price_val
-        k = self.k
 
         stop_loss_max = get_stop_loss(risk_percent_val, position_size_percent_max, entry_price_val)
         stop_loss_min = get_stop_loss(risk_percent_val, position_size_percent_min, entry_price_val)
