@@ -125,13 +125,30 @@ class Table():
     
 
     def update(self, rows):
-        self.delete_all()
-        self.insert_data(rows)
+        current_id_in_row = [int(child) for child in self.tree.get_children()]
+        for row in rows:
+            if row['id'] in current_id_in_row:
+                self.update_row(row['id'], row['content'])
+            else:
+                self.insert_row(row['id'], row['content'])
+
+
+    def update_row(self, id, values):
+        pass
+
+
+    def insert_row(self, id, values):
+        pass
     
 
-    def insert_data(self, rows):
-        for i, row in enumerate(rows):
-            self.tree.insert('', 'end', iid=i, text=row[0], values=tuple(row[1:]))
+    # def refresh(self, rows):
+    #     i = 0
+    #     for x in rows:
+    #         row = x['content']
+    #         self.tree.insert('', 'end', iid=i, text=row[0], values=tuple(row[1:]))
+    #         i += 1
+    #     curent_id_in_row = [int(child) for child in self.tree.get_children()]
+    #     print(curent_id_in_row)
 
 
     def delete_all(self):
