@@ -8,7 +8,11 @@ from .sample_response import *
 base_coin = BASE_COIN
 max_percent_quantity = MAX_PERCENT_QUANTITY
 
-client = Client(api_key, api_secret)
+try:
+    client = Client(api_key, api_secret)
+except:
+    client = None
+    
 test = False
 
 

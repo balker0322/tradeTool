@@ -57,17 +57,16 @@ class View():
         self.execute_button.pack(anchor = CENTER)
 
         # table for task status
-        # self.task_table_frame = LabelFrame(self.main_frame, text="Trade Summary")
-        # self.task_table_frame.pack(fill=X)
+        columns = (
+            'Date',
+            'Pair',
+            'Status',
+            'Profit',
+        )
         self.task_table_frame = LabelFrame(self.main_frame, text="Tasks")
         self.task_table_frame.pack(fill=X)
-        self.table = Table(master=self.task_table_frame, columns = ('Date', 'Status', 'Profit'))
-        # self.entry_price_diplay = display_value(master=self.task_table_frame, label="Entry Price:", value="100")
-        # self.stop_loss_display = display_value(master=self.task_table_frame, label="Stop Loss:", value="100")
-        # self.take_profit_display = display_value(master=self.task_table_frame, label="Take Profit:", value="100")
-        # self.risk_percentage_diplay = display_value(master=self.task_table_frame, label="Risk Percentage:", value="100")
-        # self.rr_ratio_diplay = display_value(master=self.task_table_frame, label="RR ratio:", value="100")
-        # self.position_size_diplay = display_value(master=self.task_table_frame, label="Position Size Percent:", value="100")
+        # self.task_table_frame.grid()
+        self.table = Table(master=self.task_table_frame, columns = columns)
 
         self.accept_new_task = True
 

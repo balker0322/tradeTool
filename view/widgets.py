@@ -107,39 +107,36 @@ class Table():
     def __init__(self, master, columns):
         self.master = master
         self.columns = columns
-        # self.label_width = label_width
-        # self.value = value
+        self.data_list = []
         self.initUI()
 
     def initUI(self):
 
-        self.tree = Treeview(self.master, self.columns)
+        columns = (
+            'date',
+            'pair',
+            'status',
+            'profit',
+        )
+
+        self.tree = Treeview(self.master, columns=columns[1:])
 
         # Set the heading (Attribute Names)
-        self.tree.heading('#0', text='Item')
-        self.tree.heading('#1', text='Name')
-        self.tree.heading('#2', text='ID')
-
-        # Specify attributes of the columns (We want to stretch it!)
-        self.tree.column('#0', stretch=YES)
-        self.tree.column('#1', stretch=YES)
-        self.tree.column('#2', stretch=YES)
+        for i, column in enumerate(columns):
+            self.tree.heading('#'+str(i), text=column)
+            self.tree.column('#'+str(i), stretch=YES)
 
         self.tree.grid(row=4, columnspan=4, sticky='nsew')
 
+        # self.tree = Treeview(self.master, columns = self.columns)
 
+        # # Set the heading (Attribute Names)
+        # for i, column in enumerate(self.columns):
+        #     self.tree.heading('#'+str(i), text=column)
+        #     self.tree.column('#'+str(i), stretch=YES)
 
-        # self.frame1 = Frame(self.master)
-        # frame1 = self.frame1
-        # frame1.pack(fill=X)
-
-        # self.lbl1 = Label(frame1, text=self.label, width=self.label_width)
-        # lbl1 = self.lbl1
-        # lbl1.pack(side=LEFT, padx=5, pady=5)
-        
-        # self.lbl2 = Label(frame1, text=self.value, width=self.label_width)
-        # lbl2 = self.lbl2
-        # lbl2.pack(fill=X, padx=5, expand=True)
+        # self.tree.grid(row=1, columnspan=1)#, sticky='nsew')
+        # self.tree.pack(fill=X, padx=5, expand=True)
     
     def update(self, value = None):
         pass
