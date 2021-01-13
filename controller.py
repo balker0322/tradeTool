@@ -29,8 +29,8 @@ class Controller():
 
         # table for task status
         self.table_columns = {
+            # "Task ID" : "task_id",
             "Created on" : "create_task_timestamp",
-            "Task ID" : "task_id",
             "End on" : "end_task_timestamp",
             "Risk" : "risk",
             "Reward" : "reward",
@@ -114,12 +114,15 @@ class Controller():
     def update_task_table(self):
         rows = []
         for task in self.task_list:
+            row_content = dict()
+            row_content['id'] = task.get_task_id()
             row = []
             for column in self.table_columns:
                 index = self.table_columns[column]
                 data = task.task_info[index]
                 row.append(data)
-            rows.append(tuple(row))
+            row_content['content'] = tuple(row)
+            rows.append(row_content)
         self.view.update_task_table(rows)
 
     def get_stop_loss_range(self):
