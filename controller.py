@@ -26,9 +26,36 @@ class Controller():
         self.task_list = []
         self.new_task = None
         self.accept_new_task = True
-    
-        self.view = View(self.risk_min, self.risk_max, self.tick_size, self.pair_list)
+
+        # table for task status
+        self.table_columns = {
+            "Created on" : "create_task_timestamp",
+            "Task ID" : "task_id",
+            "End on" : "end_task_timestamp",
+            "Risk" : "risk",
+            "Reward" : "reward",
+            "Pair" : "pair",
+            "Buying Price" : "buy_price",
+            "Selling Price" : "sell_price",
+            "Position Size" : "position_size",
+            "Profit" : "profit",
+            "Buy Order ID" : "buy_order_id",
+            "Take Profit Order ID" : "take_profit_order_id",
+            "Stop Loss Order ID" : "stop_loss_order_id",
+            "Status" : "status",
+            "Next Step" : "next_step",
+        }
+
+        self.view = View(
+            self.risk_min,
+            self.risk_max,
+            self.tick_size,
+            self.pair_list,
+            tuple([col for col in self.table_columns]),
+            )
+
         self.model = Model("model/tasks.db")
+
         threading.Thread(target=self.main_loop).start()
 
         self.view.run()
@@ -51,7 +78,9 @@ class Controller():
         self.view.take_profit_min, self.view.take_profit_max = self.get_take_profit_range()
         self.view.rr_ratio_val = get_rr_ratio(reward_percent_val, risk_percent_val)
         self.view.accept_new_task = self.accept_new_task
-        self.view.task_list = self.task_list
+        # self.view.task_list = self.task_list
+        # self.view.task_table.update()
+        self.update_task_table()
         self.view.update_gui()
         self.view.get_user_input()
 
@@ -81,6 +110,17 @@ class Controller():
 
     def get_db_data(self):
         self.task_list = self.model.get_all_pending_tasks()
+
+    def update_task_table(self):
+        rows = []
+        for task in self.task_list:
+            row = []
+            for column in self.table_columns:
+                index = self.table_columns[column]
+                data = task.task_info[index]
+                row.append(data)
+            rows.append(tuple(row))
+        self.view.update_task_table(rows)
 
     def get_stop_loss_range(self):
         risk_percent_val = self.view.risk_percent_val

@@ -2,7 +2,7 @@ from .widgets import *
 
 
 class View():
-    def __init__(self, risk_percent_min, risk_percent_max, tick_size, pair_list):
+    def __init__(self, risk_percent_min, risk_percent_max, tick_size, pair_list, columns):
         self.risk_percent_min = risk_percent_min
         self.risk_percent_max = risk_percent_max
         self.tick_size = tick_size
@@ -56,17 +56,10 @@ class View():
         self.execute_button = Button(self.button_frame, text = "Execute", command = self.execute_trade)
         self.execute_button.pack(anchor = CENTER)
 
-        # table for task status
-        columns = (
-            'Date',
-            'Pair',
-            'Status',
-            'Profit',
-        )
+        self.columns = columns
         self.task_table_frame = LabelFrame(self.main_frame, text="Tasks")
         self.task_table_frame.pack(fill=X)
-        # self.task_table_frame.grid()
-        self.table = Table(master=self.task_table_frame, columns = columns)
+        self.task_table = Table(master=self.task_table_frame, columns = self.columns)
 
         self.accept_new_task = True
 
@@ -80,7 +73,7 @@ class View():
         self.update_task_table(self.task_list)
     
     def update_task_table(self, task_list):
-        pass
+        self.task_table.update(task_list)
     
     def update_display_summary(self):
         self.position_size_diplay.update(self.dec_to_percent_disp(self.position_size_val))

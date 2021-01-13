@@ -112,12 +112,7 @@ class Table():
 
     def initUI(self):
 
-        columns = (
-            'date',
-            'pair',
-            'status',
-            'profit',
-        )
+        columns = self.columns
 
         self.tree = Treeview(self.master, columns=columns[1:])
 
@@ -127,25 +122,22 @@ class Table():
             self.tree.column('#'+str(i), stretch=YES)
 
         self.tree.grid(row=4, columnspan=4, sticky='nsew')
-
-        # self.tree = Treeview(self.master, columns = self.columns)
-
-        # # Set the heading (Attribute Names)
-        # for i, column in enumerate(self.columns):
-        #     self.tree.heading('#'+str(i), text=column)
-        #     self.tree.column('#'+str(i), stretch=YES)
-
-        # self.tree.grid(row=1, columnspan=1)#, sticky='nsew')
-        # self.tree.pack(fill=X, padx=5, expand=True)
     
-    def update(self, value = None):
-        pass
-        # if value:
-        #     self.value = value
-        # selection = self.value
-        # self.lbl2.config(text = selection)
 
+    def update(self, rows):
+        self.delete_all()
+        self.insert_data(rows)
     
+
+    def insert_data(self, rows):
+        for i, row in enumerate(rows):
+            self.tree.insert('', 'end', iid=i, text=row[0], values=tuple(row[1:]))
+
+
+    def delete_all(self):
+        self.tree.delete(*self.tree.get_children())
+    
+
 class container(Frame):
     def __init__(self):
         super().__init__() 
