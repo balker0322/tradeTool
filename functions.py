@@ -45,6 +45,7 @@ def get_product(*args):
     return str(product)
         
 def execute_task(task : Task):
+    time.sleep(1)
     next_step = task.get_next_step()
 
     if next_step == 'BUY':

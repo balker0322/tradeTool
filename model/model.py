@@ -47,14 +47,14 @@ class Model():
         return task_list
 
     def update_task(self, new_task_details : Task):
-        new_task_id = new_task_details.get_id()
+        new_task_id = new_task_details.get_task_id()
         new_task_info = [new_task_details.task_info[info] for info in self.info_list[1:]]
         new_task_info.append(new_task_id)
         columns = [info + " = ?" for info in self.info_list[1:]]
         columns = ", ".join(columns)
         with sqlite3.connect(self.db) as con:
             cur = con.cursor()
-            cur.execute("UPDATE tasks SET " + columns + " WHERE id = ?",
+            cur.execute("UPDATE tasks SET " + columns + " WHERE task_id = ?",
                          tuple(new_task_info))
             con.commit()
 

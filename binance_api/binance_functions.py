@@ -12,8 +12,8 @@ try:
     client = Client(api_key, api_secret)
 except:
     client = None
-    
-test = False
+
+test = True
 
 
 def order_limit_buy(symbol, quantity, price):

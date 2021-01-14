@@ -33,8 +33,8 @@ class Controller():
             # "Task ID" : "task_id",
             "Created on" : "create_task_timestamp",
             # "End on" : "end_task_timestamp",
-            "Risk" : "risk",
-            "Reward" : "reward",
+            # "Risk" : "risk",
+            # "Reward" : "reward",
             "Pair" : "pair",
             # "Buying Price" : "buy_price",
             # "Selling Price" : "sell_price",
@@ -43,8 +43,8 @@ class Controller():
             # "Buy Order ID" : "buy_order_id",
             # "Take Profit Order ID" : "take_profit_order_id",
             # "Stop Loss Order ID" : "stop_loss_order_id",
-            # "Status" : "status",
-            # "Next Step" : "next_step",
+            "Status" : "status",
+            "Next Step" : "next_step",
         }
 
         self.view = View(
@@ -105,9 +105,8 @@ class Controller():
         # execute pending tasks and update database
         for task in self.task_list:
             if task.get_status() == 'ACTIVE':
-                pass
-                # new_task_details = execute_task(task)
-                # self.model.update_task(new_task_details)      
+                new_task_details = execute_task(task)
+                self.model.update_task(new_task_details)      
 
     def get_db_data(self):
         self.task_list = self.model.get_all_pending_tasks()
