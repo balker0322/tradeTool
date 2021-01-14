@@ -114,31 +114,40 @@ class Table():
 
         columns = self.columns
 
-        self.tree = Treeview(self.master, columns=columns[1:])
+        self.tree = Treeview(self.master, columns=columns)
+        
+        # hide default first column
+        self.tree.heading('#0', text='')
+        self.tree.column('#0', stretch=NO, minwidth=0, width=0)
 
         # Set the heading (Attribute Names)
         for i, column in enumerate(columns):
-            self.tree.heading('#'+str(i), text=column)
-            self.tree.column('#'+str(i), stretch=YES)
+            self.tree.heading('#'+str(i+1), text=column)
+            self.tree.column('#'+str(i+1), stretch=YES)
 
         self.tree.grid(row=4, columnspan=4, sticky='nsew')
     
 
     def update(self, rows):
-        current_id_in_row = [int(child) for child in self.tree.get_children()]
-        for row in rows:
-            if row['id'] in current_id_in_row:
-                self.update_row(row['id'], row['content'])
-            else:
-                self.insert_row(row['id'], row['content'])
+        current_entry_in_row = [child for child in self.tree.get_children()]
 
+        for row in rows:
+
+            if not str(row['id']) in current_entry_in_row:
+                self.insert_row(row['id'], row['content'])
+                continue
+            
+            for child in current_entry_in_row:
+                if row['id'] == int(child):
+                    self.tree.item(child, text='', values=row['content'])
+                    break
 
     def update_row(self, id, values):
         pass
 
 
     def insert_row(self, id, values):
-        pass
+        self.tree.insert('', 0, iid=id, values=values)
     
 
     # def refresh(self, rows):

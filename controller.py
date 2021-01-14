@@ -4,6 +4,7 @@ from config import *
 import threading
 from functions import *
 import time
+import datetime
 
 class Controller():
     def __init__(self):
@@ -31,19 +32,19 @@ class Controller():
         self.table_columns = {
             # "Task ID" : "task_id",
             "Created on" : "create_task_timestamp",
-            "End on" : "end_task_timestamp",
+            # "End on" : "end_task_timestamp",
             "Risk" : "risk",
             "Reward" : "reward",
             "Pair" : "pair",
-            "Buying Price" : "buy_price",
-            "Selling Price" : "sell_price",
-            "Position Size" : "position_size",
-            "Profit" : "profit",
-            "Buy Order ID" : "buy_order_id",
-            "Take Profit Order ID" : "take_profit_order_id",
-            "Stop Loss Order ID" : "stop_loss_order_id",
-            "Status" : "status",
-            "Next Step" : "next_step",
+            # "Buying Price" : "buy_price",
+            # "Selling Price" : "sell_price",
+            # "Position Size" : "position_size",
+            # "Profit" : "profit",
+            # "Buy Order ID" : "buy_order_id",
+            # "Take Profit Order ID" : "take_profit_order_id",
+            # "Stop Loss Order ID" : "stop_loss_order_id",
+            # "Status" : "status",
+            # "Next Step" : "next_step",
         }
 
         self.view = View(
@@ -58,7 +59,7 @@ class Controller():
 
         threading.Thread(target=self.main_loop).start()
 
-        self.view.run()
+        self.view.run()    
     
     def main_loop(self):
         while True:
@@ -120,6 +121,9 @@ class Controller():
             for column in self.table_columns:
                 index = self.table_columns[column]
                 data = task.task_info[index]
+                if index == 'create_task_timestamp':
+                    data = round(int(data) / 1000.0)
+                    data = datetime.datetime.fromtimestamp(data)
                 row.append(data)
             row_content['content'] = tuple(row)
             rows.append(row_content)

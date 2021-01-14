@@ -99,6 +99,7 @@ class View():
         pass
 
     def execute_trade(self):
+        print("please wait...")
 
         # disable execute button
         self.execute_button['state'] = DISABLED
