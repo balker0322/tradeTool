@@ -125,6 +125,7 @@ class Table():
         self.hsb.pack(side='bottom', fill='x')
         # self.hsb.place(relx=0.014, rely=0.875, relheight=0.020, relwidth=0.965)
 
+        self.tree.configure(yscrollcommand=self.vsb.set, xscrollcommand=self.hsb.set)
         
         # hide default first column
         self.tree.heading('#0', text='')
@@ -133,10 +134,9 @@ class Table():
         # Set the heading (Attribute Names)
         for i, column in enumerate(columns):
             self.tree.heading('#'+str(i+1), text=column)
-            self.tree.column('#'+str(i+1), stretch=YES)
+            self.tree.column('#'+str(i+1), width=100, anchor='c') #, stretch=YES)
 
         # self.tree.grid(row=4, columnspan=4, sticky='nsew')
-        self.tree.configure(yscrollcommand=self.vsb.set, xscrollcommand=self.hsb.set)
         self.tree.pack()
     
 
