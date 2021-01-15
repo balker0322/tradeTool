@@ -25,7 +25,8 @@ class View():
 
         self.root = Tk()
         self.main_frame = Frame(self.root)
-        self.main_frame.grid(row=0, column=0, padx=(10, 10), pady=(10, 10))
+        # self.main_frame.grid(row=0, column=0, padx=(10, 10), pady=(10, 10))
+        self.main_frame.pack(padx=(10, 10), pady=(10, 10))
 
         # frame for user input
         self.option_frame = LabelFrame(self.main_frame, text="Options")
@@ -56,9 +57,11 @@ class View():
         self.execute_button = Button(self.button_frame, text = "Execute", command = self.execute_trade)
         self.execute_button.pack(anchor = CENTER)
 
-        self.columns = columns
-        self.task_table_frame = LabelFrame(self.main_frame, text="Tasks")
+        self.frame = Frame(self.main_frame, width=10, height=100)
+        self.frame.pack(fill=X)
+        self.task_table_frame = LabelFrame(self.frame, text="Tasks",  width=10, height=100)
         self.task_table_frame.pack(fill=X)
+        self.columns = columns
         self.task_table = Table(master=self.task_table_frame, columns = self.columns)
 
         self.accept_new_task = True

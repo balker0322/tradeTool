@@ -1,5 +1,5 @@
 from tkinter import *
-from tkinter.ttk import Frame, Label, Entry, Combobox, Treeview
+from tkinter.ttk import Frame, Label, Entry, Combobox, Treeview, Scrollbar
 
 class slider_input():
 
@@ -115,6 +115,16 @@ class Table():
         columns = self.columns
 
         self.tree = Treeview(self.master, columns=columns)
+
+        # scrollbars
+        self.vsb = Scrollbar(self.master, orient="vertical", command=self.tree.yview)
+        # self.vsb.place(relx=0.978, rely=0.175, relheight=0.713, relwidth=0.020)
+        self.vsb.pack(side='right', fill='y')
+
+        self.hsb = Scrollbar(self.master, orient="horizontal", command=self.tree.xview)
+        self.hsb.pack(side='bottom', fill='x')
+        # self.hsb.place(relx=0.014, rely=0.875, relheight=0.020, relwidth=0.965)
+
         
         # hide default first column
         self.tree.heading('#0', text='')
@@ -125,7 +135,9 @@ class Table():
             self.tree.heading('#'+str(i+1), text=column)
             self.tree.column('#'+str(i+1), stretch=YES)
 
-        self.tree.grid(row=4, columnspan=4, sticky='nsew')
+        # self.tree.grid(row=4, columnspan=4, sticky='nsew')
+        self.tree.configure(yscrollcommand=self.vsb.set, xscrollcommand=self.hsb.set)
+        self.tree.pack()
     
 
     def update(self, rows):
