@@ -29,13 +29,20 @@ class View():
         # self.main_frame.grid(row=0, column=0, padx=(10, 10), pady=(10, 10))
         self.main_frame.pack(padx=(10, 10), pady=(10, 10))
 
+
+        self.frame0 = Frame(self.main_frame)
+        self.frame0.pack(expand=True)
+
         # control frame
-        self.frame1 = Frame(self.main_frame, height=100,width=150)
+        self.frame1 = Frame(self.frame0, height=100,width=150)
         self.frame1.pack(side=RIGHT, anchor=N)
 
         # chart frame
-        self.frame2 = Frame(self.main_frame, relief='groove')
-        self.frame2.pack(fill=X, side=LEFT)
+        self.frame2 = Frame(self.frame0, borderwidth=1, height=100)
+        self.frame2.pack(fill=X)
+        # self.chart_frame = LabelFrame(self.frame2, text="Chart")
+        # self.chart_frame.pack(fill=X)
+
 
         # frame for user input
         self.option_frame = LabelFrame(self.frame1, text="Options")
@@ -66,9 +73,9 @@ class View():
         self.execute_button = Button(self.button_frame, text = "Execute", command = self.execute_trade)
         self.execute_button.pack(anchor = CENTER)
 
-        self.frame = Frame(self.main_frame, width=10, height=50)
-        self.frame.pack(fill=X)
-        self.task_table_frame = LabelFrame(self.frame, text="Tasks",  width=100, height=50)
+        self.frame3 = Frame(self.main_frame, width=10, height=50)
+        self.frame3.pack(anchor=S)
+        self.task_table_frame = LabelFrame(self.frame3, text="Tasks",  width=100, height=50)
         self.task_table_frame.pack(fill=X)
         self.columns = columns
         self.task_table = Table(master=self.task_table_frame, columns = self.columns)
