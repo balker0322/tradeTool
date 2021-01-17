@@ -35,7 +35,7 @@ class View():
 
         # chart frame
         self.frame2 = Frame(self.main_frame, relief='groove')
-        self.frame2.pack(fill=X)
+        self.frame2.pack(fill=X, side=LEFT)
 
         # frame for user input
         self.option_frame = LabelFrame(self.frame1, text="Options")
