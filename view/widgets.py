@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter.ttk import Frame, Label, Entry, Combobox, Treeview, Scrollbar
 
+
 class slider_input():
 
     def __init__(self, master, label = "No label", label_width = 15):

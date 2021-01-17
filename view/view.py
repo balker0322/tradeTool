@@ -24,12 +24,21 @@ class View():
         self.task_list = []
 
         self.root = Tk()
-        self.main_frame = Frame(self.root, height=100,width=150)
-        self.main_frame.grid(row=0, column=0, padx=(10, 10), pady=(10, 10))
-        # self.main_frame.pack(padx=(10, 10), pady=(10, 10))
+        self.root.geometry("1000x1000")
+        self.main_frame = Frame(self.root)
+        # self.main_frame.grid(row=0, column=0, padx=(10, 10), pady=(10, 10))
+        self.main_frame.pack(padx=(10, 10), pady=(10, 10))
+
+        # control frame
+        self.frame1 = Frame(self.main_frame, height=100,width=150)
+        self.frame1.pack(side=RIGHT, anchor=N)
+
+        # chart frame
+        self.frame2 = Frame(self.main_frame, relief='groove')
+        self.frame2.pack(fill=X)
 
         # frame for user input
-        self.option_frame = LabelFrame(self.main_frame, text="Options")
+        self.option_frame = LabelFrame(self.frame1, text="Options")
         self.option_frame.pack(fill=X)
         self.pair_input = drop_down(master=self.option_frame, options=self.pair_list, label = "Pair:")
         self.risk_input = slider_input(master=self.option_frame, label = "Risk Percentage:")
@@ -42,7 +51,7 @@ class View():
         self.take_profit_input.scale.config(resolution=float(self.tick_size))
 
         # frame for summary of trading parameters
-        self.summary_frame = LabelFrame(self.main_frame, text="Trade Summary")
+        self.summary_frame = LabelFrame(self.frame1, text="Trade Summary")
         self.summary_frame.pack(fill=X)
         self.entry_price_diplay = display_value(master=self.summary_frame, label="Entry Price:", value="100")
         self.stop_loss_display = display_value(master=self.summary_frame, label="Stop Loss:", value="100")
@@ -52,7 +61,7 @@ class View():
         self.position_size_diplay = display_value(master=self.summary_frame, label="Position Size Percent:", value="100")
 
         # frame for trade execution buttons
-        self.button_frame = Frame(self.main_frame)
+        self.button_frame = Frame(self.frame1)
         self.button_frame.pack(fill=X)
         self.execute_button = Button(self.button_frame, text = "Execute", command = self.execute_trade)
         self.execute_button.pack(anchor = CENTER)
