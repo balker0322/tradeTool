@@ -3,7 +3,7 @@ import tkinter.ttk as ttk
 
 tradeControlWidth = 300
 valueColumnWidth = 30
-labelColumnWidth = 10
+labelColumnWidth = 15
 
 class TradeControl(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
@@ -36,8 +36,8 @@ class TradeOptions(tk.Frame):
         risk_var = tk.DoubleVar() # TODO
         risk_frame = tk.Frame(label_frame)
         risk_label = ttk.Label(risk_frame, text="Risk:", width=labelColumnWidth)
-        risk_scale = tk.Scale(risk_frame, variable = risk_var, orient=tk.HORIZONTAL, width=valueColumnWidth)
-        risk_label.pack(side=tk.LEFT)
+        risk_scale = tk.Scale(risk_frame, variable = risk_var, orient=tk.HORIZONTAL)
+        risk_label.pack(side=tk.LEFT, anchor=tk.S)
         risk_scale.pack(fill=tk.X)
 
         # entry price
@@ -45,9 +45,21 @@ class TradeOptions(tk.Frame):
 
         # stop loss
         stop_loss_frame = tk.Frame(label_frame)
+        stop_loss_var = tk.DoubleVar() # TODO
+        stop_loss_frame = tk.Frame(label_frame)
+        stop_loss_label = ttk.Label(stop_loss_frame, text="Stop Loss:", width=labelColumnWidth)
+        stop_loss_scale = tk.Scale(stop_loss_frame, variable = stop_loss_var, orient=tk.HORIZONTAL)
+        stop_loss_label.pack(side=tk.LEFT, anchor=tk.S)
+        stop_loss_scale.pack(fill=tk.X)
 
         # take profit
         take_profit_frame = tk.Frame(label_frame)
+        take_profit_var = tk.DoubleVar() # TODO
+        take_profit_frame = tk.Frame(label_frame)
+        take_profit_label = ttk.Label(take_profit_frame, text="Take Profit:", width=labelColumnWidth)
+        take_profit_scale = tk.Scale(take_profit_frame, variable = take_profit_var, orient=tk.HORIZONTAL)
+        take_profit_label.pack(side=tk.LEFT, anchor=tk.S)
+        take_profit_scale.pack(fill=tk.X)
 
         pair_frame.pack(fill=tk.X)
         risk_frame.pack(fill=tk.X)
