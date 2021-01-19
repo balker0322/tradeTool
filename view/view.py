@@ -31,17 +31,25 @@ class View():
 
 
         self.frame0 = Frame(self.main_frame)
-        self.frame0.pack(expand=True)
+        self.frame0.pack(side=RIGHT, fill=X, expand=True)
 
         # control frame
         self.frame1 = Frame(self.frame0, height=100,width=150)
         self.frame1.pack(side=RIGHT, anchor=N)
 
         # chart frame
-        self.frame2 = Frame(self.frame0, borderwidth=1, height=100)
-        self.frame2.pack(fill=X)
-        # self.chart_frame = LabelFrame(self.frame2, text="Chart")
-        # self.chart_frame.pack(fill=X)
+        self.frame2 = Frame(self.frame0)
+        self.frame2.pack(fill=BOTH, expand=True)
+
+
+        root = self.frame2
+        image = Image.open("view/chart.png")
+        width, height = root.winfo_screenwidth(), root.winfo_screenheight()
+        image = image.resize((width, height), Image.ANTIALIAS)
+        image = ImageTk.PhotoImage(image)
+        bg_label = tk.Label(root, image = image, height=100,width=150)
+        bg_label.image = image
+        bg_label.pack()
 
 
         # frame for user input
