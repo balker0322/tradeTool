@@ -181,3 +181,54 @@ class Table():
 class container(Frame):
     def __init__(self):
         super().__init__() 
+
+
+
+# import tkinter as tk
+
+# class Chart(tk.Frame):
+#     def __init__(self, parent, *args, **kwargs):
+#         super().__init__(parent, *args, **kwargs)
+
+#         self.parent = parent
+
+#         self.label = tk.Button(self, text="Chart", bg="blue")
+#         self.label.pack(fill=tk.BOTH, expand=1)
+
+
+# class TradeControl(tk.Frame):
+#     def __init__(self, parent, *args, **kwargs):
+#         super().__init__(parent, *args, **kwargs)
+
+#         self.parent = parent
+
+#         self.label = tk.Button(self, text="control", bg="red")
+#         self.label.pack(fill=tk.BOTH, expand=1)
+
+# class TradeLog(tk.Frame):
+#     def __init__(self, parent, *args, **kwargs):
+#         super().__init__(parent, *args, **kwargs)
+
+#         self.parent = parent
+
+#         self.label = tk.Button(self, text="log", bg="green")
+#         self.label.pack(fill=tk.BOTH, expand=1)
+
+
+# class MainApp(tk.Tk):
+#     def __init__(self):
+#         super().__init__()
+
+#         self.geometry("1000x700")
+
+#         frame1 = tk.Frame(self)
+#         frame1.pack(fill=tk.BOTH, expand=1)
+
+#         trade_control = TradeControl(frame1, width=100)
+#         chart = Chart(frame1)
+
+#         trade_log = TradeLog(self, height=100)
+
+#         trade_control.pack(fill=tk.Y, side=tk.RIGHT)
+#         chart.pack(fill=tk.BOTH, expand=1)
+#         trade_log.pack(fill=tk.X)
