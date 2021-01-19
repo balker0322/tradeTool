@@ -42,14 +42,14 @@ class View():
         self.frame2.pack(fill=BOTH, expand=True)
 
 
-        root = self.frame2
-        image = Image.open("view/chart.png")
-        width, height = root.winfo_screenwidth(), root.winfo_screenheight()
-        image = image.resize((width, height), Image.ANTIALIAS)
-        image = ImageTk.PhotoImage(image)
-        bg_label = tk.Label(root, image = image, height=100,width=150)
-        bg_label.image = image
-        bg_label.pack()
+        # root = self.frame2
+        # image = Image.open("view/chart.png")
+        # width, height = root.winfo_screenwidth(), root.winfo_screenheight()
+        # image = image.resize((width, height), Image.ANTIALIAS)
+        # image = ImageTk.PhotoImage(image)
+        # bg_label = tk.Label(root, image = image, height=100,width=150)
+        # bg_label.image = image
+        # bg_label.pack()
 
 
         # frame for user input
