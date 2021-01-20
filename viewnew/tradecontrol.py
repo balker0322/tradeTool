@@ -41,7 +41,12 @@ class TradeOptions(tk.Frame):
         risk_scale.pack(fill=tk.X)
 
         # entry price
+        entry_price_var = tk.StringVar()
         entry_price_frame = tk.Frame(label_frame)
+        entry_price_label = ttk.Label(entry_price_frame, text="Entry Price:", width=labelColumnWidth)
+        entry_price_entry = tk.Entry(entry_price_frame, textvariable=entry_price_var)
+        entry_price_label.pack(side=tk.LEFT, anchor=tk.S)
+        entry_price_entry.pack(fill=tk.X)
 
         # stop loss
         stop_loss_frame = tk.Frame(label_frame)
@@ -61,11 +66,11 @@ class TradeOptions(tk.Frame):
         take_profit_label.pack(side=tk.LEFT, anchor=tk.S)
         take_profit_scale.pack(fill=tk.X)
 
-        pair_frame.pack(fill=tk.X)
-        risk_frame.pack(fill=tk.X)
-        entry_price_frame.pack(fill=tk.X)
-        stop_loss_frame.pack(fill=tk.X)
-        take_profit_frame.pack(fill=tk.X)
+        pair_frame.pack(fill=tk.X, padx=10, pady=10)
+        risk_frame.pack(fill=tk.X, padx=10, pady=10)
+        entry_price_frame.pack(fill=tk.X, padx=10, pady=10)
+        stop_loss_frame.pack(fill=tk.X, padx=10, pady=10)
+        take_profit_frame.pack(fill=tk.X, padx=10, pady=10)
 
 
 class TradeSummary(tk.Frame):
